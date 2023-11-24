@@ -40,6 +40,11 @@ function Navbar() {
                 <a className="nav-link" href="about.html">
                   About
                 </a>
+                          </li>
+                          <li className="nav-item ">
+                <a className="nav-link" href="services.html">
+                  Blog
+                </a>
               </li>
               <li className="nav-item ">
                 {" "}
@@ -47,19 +52,18 @@ function Navbar() {
                   How It Works
                 </a>
               </li>
-              <li className="nav-item ">
-                {" "}
+              {/* <li className="nav-item ">
                 <a className="nav-link" href="services.html">
                   Services
                 </a>
-              </li>
+              </li> */}
               <li className="nav-item ">
                 {" "}
                 <a className="nav-link" href="contact.html">
                   Contact
                 </a>
               </li>
-              <li className="nav-item dropdown">
+              {/* <li className="nav-item dropdown">
                 {" "}
                 <a
                   className="nav-link dropdown-toggle"
@@ -108,14 +112,14 @@ function Navbar() {
                     </a>
                   </li>
                 </ul>
-              </li>
+              </li> */}
             </ul>
-            <a href="#!" className="btn btn-outline-primary">
+            {/* <a href="#!" className="btn btn-outline-primary">
               Log In
             </a>
             <a href="#!" className="btn btn-primary ms-2 ms-lg-3">
               Sign Up
-            </a>
+            </a> */}
           </div>
         </div>
       </nav>
