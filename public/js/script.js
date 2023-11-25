@@ -37,6 +37,7 @@ $(window).on("load", function () {
 
   $(".nav-tabs a").click(function (e) {
     e.preventDefault();
+    console.log("asd");
     var tab = $(this).parent(),
       tabIndex = tab.index(),
       tabPanel = $(this).closest(".code-tabs"),

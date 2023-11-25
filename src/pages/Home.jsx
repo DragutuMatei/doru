@@ -1,23 +1,23 @@
 import React from "react";
 
 function Home() {
-  const click = (index) => {
-    const h2 = document.querySelectorAll(".accordion-header");
-    const length = h2.length;
-    const details = document.querySelectorAll(".accordion-collapse");
+  // const click = (index) => {
+  //   const h2 = document.querySelectorAll(".accordion-header");
+  //   const length = h2.length;
+  //   const details = document.querySelectorAll(".accordion-collapse");
 
-    for (let i = 0; i < length; i++) {
-      if (h2[i].classList.contains("active")) {
-        h2[i].classList.remove("active");
-      }
+  //   for (let i = 0; i < length; i++) {
+  //     if (h2[i].classList.contains("active")) {
+  //       h2[i].classList.remove("active");
+  //     }
 
-      if (details[i].classList.contains("show")) {
-        details[i].classList.remove("show");
-      }
-    }
-    h2[index].classList.add("active");
-    details[index].classList.add("show");
-  };
+  //     if (details[i].classList.contains("show")) {
+  //       details[i].classList.remove("show");
+  //     }
+  //   }
+  //   h2[index].classList.add("active");
+  //   details[index].classList.add("show");
+  // };
 
   return (
     <>
@@ -1005,7 +1005,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="section">
+      {/* <section className="section">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12">
@@ -1216,7 +1216,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }

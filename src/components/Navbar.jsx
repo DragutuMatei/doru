@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
     <header className="navigation bg-tertiary">
       <nav className="navbar navbar-expand-xl navbar-light text-center py-3">
         <div className="container">
-          <a className="navbar-brand" href="index.html">
+          <Link className="navbar-brand" to="/">
             <img
               loading="prelaod"
               decoding="async"
@@ -14,7 +15,7 @@ function Navbar() {
               src={require("../images/logo.png")}
               alt="Wallet"
             />
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -31,26 +32,24 @@ function Navbar() {
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 {" "}
-                <a className="nav-link" href="index.html">
+                <Link className="nav-link" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item ">
-                {" "}
-                <a className="nav-link" href="about.html">
+                <Link className="nav-link" to="/about">
                   About
-                </a>
-                          </li>
-                          <li className="nav-item ">
-                <a className="nav-link" href="services.html">
-                  Blog
-                </a>
+                </Link>
               </li>
               <li className="nav-item ">
-                {" "}
-                <a className="nav-link" href="how-it-works.html">
+                <Link className="nav-link" to="/blog">
+                  Blog
+                </Link>
+              </li>
+              <li className="nav-item ">
+                <Link className="nav-link" to="/how">
                   How It Works
-                </a>
+                </Link>
               </li>
               {/* <li className="nav-item ">
                 <a className="nav-link" href="services.html">
@@ -58,10 +57,9 @@ function Navbar() {
                 </a>
               </li> */}
               <li className="nav-item ">
-                {" "}
-                <a className="nav-link" href="contact.html">
+                <Link className="nav-link" to="/contact">
                   Contact
-                </a>
+                </Link>
               </li>
               {/* <li className="nav-item dropdown">
                 {" "}
