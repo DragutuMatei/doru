@@ -533,7 +533,7 @@ function Home() {
             </div>
             <div className="col-lg-10">
               <ul
-                className="payment_info_tab nav nav-pills justify-content-center mb-4"
+                className="payment_info_tab nav nav-pills justify-content-center mb-4 "
                 id="pills-tab"
                 role="tablist"
               >
