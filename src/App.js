@@ -8,6 +8,7 @@ import How from "./pages/How";
 import "./css/style.scss";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/blog/:id" element={<BlogPost />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/how" element={<How />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </Router>

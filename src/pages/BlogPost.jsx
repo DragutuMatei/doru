@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Fire from "../Fire";
 
 function BlogPost() {
-  return (
-    <> 
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dbHandler = new Fire();
 
+        // Example: Fetch data
+        const fetchedData = await dbHandler.getData("/test");
+        // console.log(Object.entries(fetchedData));
+        setData(fetchedData);
+
+        Object.entries(fetchedData).map((da) => {
+          console.log(da[0] + "+" + da[1].name);
+        });
+
+        // Example: Listen for real-time changes
+        dbHandler.listenForChanges("/test", (changedData) => {
+          setData(changedData);
+          console.log(changedData);
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // Run once on component mount
+
+  return (
+    <>
       <div className="section">
         <div className="container">
           <div className="row justify-content-center">
@@ -41,18 +69,6 @@ function BlogPost() {
                     src={require("../images/blog/post-4.jpg")}
                     alt="Post Thumbnail"
                   />
-                  <img
-                    loading="lazy"
-                    decoding="async"
-                    src={require("../images/blog/post-5.jpg")}
-                    alt="Post Thumbnail"
-                  />
-                  <img
-                    loading="lazy"
-                    decoding="async"
-                    src={require("../images/blog/post-3.jpg")}
-                    alt="Post Thumbnail"
-                  />
                 </div>
               </div>
               <div className="content">
@@ -63,6 +79,13 @@ function BlogPost() {
                   <code>#</code> for heading 1 and use <code>######</code> for
                   heading 6.
                 </p>
+                {Object.entries(data).map((da) => {
+                  console.log(da[0] + "+" + da[1].name);
+
+                  return (
+                      <h1 id="heading-1">{da[1].name}</h1>
+                  );
+                })}
                 <h1 id="heading-1">Heading 1</h1>
                 <h2 id="heading-2">Heading 2</h2>
                 <h3 id="heading-3">Heading 3</h3>
