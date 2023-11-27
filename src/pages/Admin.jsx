@@ -55,7 +55,7 @@ import React, { useState, useEffect } from "react";
 import Fire from "../Fire";
 
 const YourReactComponent = () => {
-  const [data, setData] =  useState([]);
+  const [data, setData] = useState([]);
   const [newDataKey, setNewDataKey] = useState(null);
 
   useEffect(() => {
@@ -68,9 +68,9 @@ const YourReactComponent = () => {
         // console.log(Object.entries(fetchedData));
         setData(fetchedData);
 
-        Object.entries(fetchedData).map((da) => {
-          console.log(da[0] + "+" + da[1].name);
-        });
+        // Object.entries(fetchedData).map((da) => {
+        //   console.log(da[0] + "+" + da[1].name);
+        // });
 
         // Example: Listen for real-time changes
         dbHandler.listenForChanges("/test", (changedData) => {
@@ -133,26 +133,20 @@ const YourReactComponent = () => {
         onChange={(e) => setName(e.target.value)}
         value={name}
       />
-      {Object.entries(data).map((da) => {
-        console.log(da[0] + "+" + da[1].name);
+      {data != null &&
+        Object.entries(data) &&
+        Object.entries(data).map((da) => {
+          console.log(da[0] + "+" + da[1].name);
 
-        return (
-          <>
-            <h1>{da[1].name}</h1>
-            <button onClick={() => handleDeleteData(da[0])}>Delete Data</button>
-          </>
-        );
-      })}
-
-      {Object.entries(data).map((da) => {
-        console.log(da);
-        // return (
-        //   <>
-        //     <h1>{da.name}</h1>
-        //     <button onClick={()=>handleDeleteData(da.key)}>Delete Data</button>
-        //   </>
-        // );
-      })}
+          return (
+            <>
+              <h1>{da[1].name}</h1>
+              <button onClick={() => handleDeleteData(da[0])}>
+                Delete Data
+              </button>
+            </>
+          );
+        })}
     </div>
   );
 };
