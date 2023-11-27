@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^40.1.0",
+    "@ckeditor/ckeditor5-react": "^6.2.0",
     "@react-bootstrap/babel-preset": "^2.2.0",
     "@react-bootstrap/eslint-config": "^3.0.0",
     "@react-firebase/auth": "^0.2.10",
