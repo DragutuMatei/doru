@@ -3,22 +3,30 @@ import Fire from "../Fire";
 
 function BlogPost() {
   const [data, setData] = useState([]);
+  const [newDataKey, setNewDataKey] = useState(null);
+
   useEffect(() => {
+    // CKEDITOR.replace("post_text", {
+    //   language: "en",
+    //   uiColor: "#dddddd",
+    //   height: 500,
+    //   resize_dir: "vertical",
+    // });
     const fetchData = async () => {
       try {
         const dbHandler = new Fire();
 
         // Example: Fetch data
-        const fetchedData = await dbHandler.getData("/test");
+        const fetchedData = await dbHandler.getData("/blog");
         // console.log(Object.entries(fetchedData));
         setData(fetchedData);
 
-        Object.entries(fetchedData).map((da) => {
-          console.log(da[0] + "+" + da[1].name);
-        });
+        // Object.entries(fetchedData).map((da) => {
+        //   console.log(da[0] + "+" + da[1].name);
+        // });
 
         // Example: Listen for real-time changes
-        dbHandler.listenForChanges("/test", (changedData) => {
+        dbHandler.listenForChanges("/blog", (changedData) => {
           setData(changedData);
           console.log(changedData);
         });
@@ -28,8 +36,7 @@ function BlogPost() {
     };
 
     fetchData();
-  }, []); // Run once on component mount
-
+  }, []);
   return (
     <>
       <div className="section">
@@ -61,7 +68,7 @@ function BlogPost() {
                   </a>
                 </p>
               </div>
-              <div className="mb-5 text-center">
+              {/* <div className="mb-5 text-center">
                 <div className="post-slider rounded overflow-hidden">
                   <img
                     loading="lazy"
@@ -70,7 +77,7 @@ function BlogPost() {
                     alt="Post Thumbnail"
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="content">
                 <h4 id="heading-example">Heading example</h4>
                 <p>
@@ -79,13 +86,6 @@ function BlogPost() {
                   <code>#</code> for heading 1 and use <code>######</code> for
                   heading 6.
                 </p>
-                {Object.entries(data).map((da) => {
-                  console.log(da[0] + "+" + da[1].name);
-
-                  return (
-                      <h1 id="heading-1">{da[1].name}</h1>
-                  );
-                })}
                 <h1 id="heading-1">Heading 1</h1>
                 <h2 id="heading-2">Heading 2</h2>
                 <h3 id="heading-3">Heading 3</h3>

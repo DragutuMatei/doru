@@ -89,7 +89,7 @@ const YourReactComponent = () => {
         const dbHandler = new Fire();
 
         // Example: Fetch data
-        const fetchedData = await dbHandler.getData("/test");
+        const fetchedData = await dbHandler.getData("/blog");
         // console.log(Object.entries(fetchedData));
         setData(fetchedData);
 
@@ -98,7 +98,7 @@ const YourReactComponent = () => {
         // });
 
         // Example: Listen for real-time changes
-        dbHandler.listenForChanges("/test", (changedData) => {
+        dbHandler.listenForChanges("/blog", (changedData) => {
           setData(changedData);
           console.log(changedData);
         });
@@ -148,6 +148,23 @@ const YourReactComponent = () => {
   const [name, setName] = useState("");
   const [textEditor, setTextEditor] = useState([]);
 
+  const submit = async () => {
+    try {
+      const dbHandler = new Fire();
+
+      const newDataId = await dbHandler.createData("/blog", {
+        text: textEditor,
+      });
+      console.log("e ok")
+      setNewDataKey(newDataId);
+      setTextEditor("");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    // console.("e ok2")
+
+  };
+
   return (
     <>
       <div>
@@ -161,7 +178,7 @@ const YourReactComponent = () => {
           onChange={(e) => setName(e.target.value)}
           value={name}
         />
-        {data != null &&
+        {/* {data != null &&
           Object.entries(data) &&
           Object.entries(data).map((da) => {
             console.log(da[0] + "+" + da[1].name);
@@ -174,7 +191,7 @@ const YourReactComponent = () => {
                 </button>
               </>
             );
-          })}
+          })} */}
       </div>
       {/* <script
         type="text/javascript"
@@ -260,6 +277,7 @@ const YourReactComponent = () => {
         }}
       />
       <br />
+      <button onClick={submit}>Add blog post</button>
       <br />
       <br />
       <br />
