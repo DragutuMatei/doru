@@ -56,7 +56,23 @@ import Fire from "../Fire";
 import "../css/admin.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import cheerio, { text } from "cheerio";
 
+const MyComponent = ({ htmlString }) => {
+  const $ = cheerio.load(htmlString);
+
+  $("p").addClass("your-custom-class");
+  $("h2").addClass("heading-2");
+
+  const modifiedHtmlString = $.html();
+
+  return (
+    <div
+      className="your-container-class"
+      dangerouslySetInnerHTML={{ __html: modifiedHtmlString }}
+    />
+  );
+};
 const YourReactComponent = () => {
   const [data, setData] = useState([]);
   const [newDataKey, setNewDataKey] = useState(null);
@@ -249,8 +265,8 @@ const YourReactComponent = () => {
       <br />
       <br />
       <div className="wrap-result">
-        <div dangerouslySetInnerHTML={{ __html: textEditor }}></div>
-
+        {/* <div dangerouslySetInnerHTML={{ __html: textEditor }}></div> */}
+        <MyComponent htmlString={textEditor} />
         {/* {textEditor && textEditor.map((item, id) => {
         return (
           <div key={id} className="result-card">
