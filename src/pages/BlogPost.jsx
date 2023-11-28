@@ -1,35 +1,26 @@
 import React, { useState, useEffect } from "react";
 import Fire from "../Fire";
+import Idk from "../components/Idk";
+import { useParams } from "react-router-dom";
 
 function BlogPost() {
+  const { id } = useParams();
   const [data, setData] = useState([]);
   const [newDataKey, setNewDataKey] = useState(null);
 
   useEffect(() => {
-    // CKEDITOR.replace("post_text", {
-    //   language: "en",
-    //   uiColor: "#dddddd",
-    //   height: 500,
-    //   resize_dir: "vertical",
-    // });
     const fetchData = async () => {
       try {
         const dbHandler = new Fire();
 
-        // Example: Fetch data
-        const fetchedData = await dbHandler.getData("/blog");
-        // console.log(Object.entries(fetchedData));
-        setData(fetchedData);
+        const fetchedData = await dbHandler.getData(`/blog/${id}`);
+        setData(Object.entries(fetchedData)[0][1]);
+        console.log("Data:", Object.entries(fetchedData)[0][1]);
 
-        // Object.entries(fetchedData).map((da) => {
-        //   console.log(da[0] + "+" + da[1].name);
+        // dbHandler.listenForChanges(`/blog`, (changedData) => {
+        //   setData(Object.entries(changedData)[0][1].text);
+        //   console.log("change: ", Object.entries(changedData)[0][1].text);
         // });
-
-        // Example: Listen for real-time changes
-        dbHandler.listenForChanges("/blog", (changedData) => {
-          setData(changedData);
-          console.log(changedData);
-        });
       } catch (error) {
         console.error("Error:", error);
       }
@@ -43,7 +34,7 @@ function BlogPost() {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">
-              <div className="mb-5">
+              {/* <div className="mb-5">
                 <h2 className="mb-4" style={{ lineHeight: "1.5" }}>
                   Elements That You Can Use To Create A New Post On This
                   Template.
@@ -67,7 +58,7 @@ function BlogPost() {
                     Image{" "}
                   </a>
                 </p>
-              </div>
+              </div> */}
               {/* <div className="mb-5 text-center">
                 <div className="post-slider rounded overflow-hidden">
                   <img
@@ -79,7 +70,9 @@ function BlogPost() {
                 </div>
               </div> */}
               <div className="content">
-                <h4 id="heading-example">Heading example</h4>
+                <Idk htmlString={data} />
+
+                {/* <h4 id="heading-example">Heading example</h4>
                 <p>
                   Here is example of hedings. You can use this heading by
                   following markdownify rules. For example: use
@@ -397,7 +390,7 @@ function BlogPost() {
                     allowfullscreen
                     title="YouTube Video"
                   ></iframe>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

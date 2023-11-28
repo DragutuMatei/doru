@@ -56,23 +56,8 @@ import Fire from "../Fire";
 import "../css/admin.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import cheerio, { text } from "cheerio";
+import Idk from "../components/Idk";
 
-const MyComponent = ({ htmlString }) => {
-  const $ = cheerio.load(htmlString);
-
-  $("p").addClass("your-custom-class");
-  $("h2").addClass("heading-2");
-
-  const modifiedHtmlString = $.html();
-
-  return (
-    <div
-      className="your-container-class"
-      dangerouslySetInnerHTML={{ __html: modifiedHtmlString }}
-    />
-  );
-};
 const YourReactComponent = () => {
   const [data, setData] = useState([]);
   const [newDataKey, setNewDataKey] = useState(null);
@@ -127,10 +112,7 @@ const YourReactComponent = () => {
     try {
       const dbHandler = new Fire();
 
-      // Example: Update data
-      await dbHandler.updateData("/test", {
-        /* updated data */
-      });
+      await dbHandler.updateData("/test", {});
     } catch (error) {
       console.error("Error:", error);
     }
@@ -140,7 +122,7 @@ const YourReactComponent = () => {
       const dbHandler = new Fire();
 
       // Example: Delete data
-      await dbHandler.deleteData(`/test/${id}`);
+      await dbHandler.deleteData(`/blog/${id}`);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -152,17 +134,37 @@ const YourReactComponent = () => {
     try {
       const dbHandler = new Fire();
 
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, "0");
+      var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      var yyyy = today.getFullYear();
+      const monthsAbbreviated = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      today = dd + " " + monthsAbbreviated[mm] + ", " + yyyy;
+
       const newDataId = await dbHandler.createData("/blog", {
         text: textEditor,
+        data: today,
       });
-      console.log("e ok")
+      console.log("e ok");
       setNewDataKey(newDataId);
-      setTextEditor("");
+      setTextEditor([]);
     } catch (error) {
       console.error("Error:", error);
     }
     // console.("e ok2")
-
   };
 
   return (
@@ -221,7 +223,6 @@ const YourReactComponent = () => {
       <br />
       <CKEditor
         editor={ClassicEditor}
-        data="<p>Hello from CKEditor 5!</p>"
         config={{
           toolbar: [
             "heading",
@@ -250,7 +251,6 @@ const YourReactComponent = () => {
           ],
         }}
         onInit={(editor) => {
-          // You can store the "editor" and use when it is needed.
           console.log("Editor is ready to use!", editor);
           console.log(
             "toolbar: ",
@@ -260,6 +260,7 @@ const YourReactComponent = () => {
             "plugins: ",
             ClassicEditor.builtinPlugins.map((plugin) => plugin.pluginName)
           );
+          
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
@@ -284,7 +285,7 @@ const YourReactComponent = () => {
       <br />
       <div className="wrap-result">
         {/* <div dangerouslySetInnerHTML={{ __html: textEditor }}></div> */}
-        <MyComponent htmlString={textEditor} />
+        <Idk htmlString={textEditor} />
         {/* {textEditor && textEditor.map((item, id) => {
         return (
           <div key={id} className="result-card">

@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Fire from "../Fire";
+import cheerio from "cheerio";
 
 function Blog() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dbHandler = new Fire();
+
+        const fetchedData = await dbHandler.getData(`/blog`);
+        setData(fetchedData);
+
+        // Object.entries(fetchedData).map((da) => {
+        //   console.log(da[0] + "+" + da[1].name);
+        // });
+
+        // Example: Listen for real-time changes
+        dbHandler.listenForChanges("/blog", (changedData) => {
+          setData(changedData);
+          console.log(changedData);
+        });
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <div
@@ -210,7 +238,56 @@ function Blog() {
             <div className="col-lg-9">
               <div className="me-lg-4">
                 <div className="row gy-5">
-                  <div className="col-md-6" data-aos="fade">
+                  {data != null &&
+                    Object.entries(data) &&
+                    Object.entries(data)
+                      .reverse()
+                      .map((da) => {
+                        const $ = cheerio.load(da[1].text);
+                        const h2 = $("h2").first().text();
+                        const p =
+                          $("p").first().text().length > 81
+                            ? $("p").first().text().slice(0, 81) + "..."
+                            : $("p").first().text();
+
+                        return (
+                          <>
+                            <div className="col-md-6" data-aos="fade">
+                              <article className="blog-post">
+                                <div className="post-slider slider-sm rounded">
+                                  <img
+                                    loading="lazy"
+                                    decoding="async"
+                                    src={require("../images/blog/post-4.jpg")}
+                                    alt="Post Thumbnail"
+                                  />
+                                </div>
+                                <div className="pt-4">
+                                  <p className="mb-3">15 Mar, 2020</p>
+                                  <h2 className="h4">
+                                    <Link
+                                      className="text-black"
+                                      to={`/blog/${da[0]}`}
+                                    >
+                                      {h2}
+                                    </Link>
+                                  </h2>
+                                  <p>{p}</p> 
+                                  <Link
+                                    to={`/blog/${da[0]}`}
+                                    className="text-primary fw-bold"
+                                    aria-label="Read the full article by clicking here"
+                                  >
+                                    Read More
+                                  </Link>
+                                </div>
+                              </article>
+                            </div>
+                          </>
+                        );
+                      })}
+
+                  {/* <div className="col-md-6" data-aos="fade">
                     <article className="blog-post">
                       <div className="post-slider slider-sm rounded">
                         <img
@@ -427,7 +504,7 @@ function Blog() {
                         </ul>
                       </nav>
                     </nav>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
