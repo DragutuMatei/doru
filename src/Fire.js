@@ -1,18 +1,26 @@
-import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, push, get, update, remove, onValue } from 'firebase/database';
+import { initializeApp } from "firebase/app";
+import {
+  getDatabase,
+  ref,
+  push,
+  get,
+  update,
+  remove,
+  onValue,
+} from "firebase/database";
 
 class Fire {
   constructor() {
     // Initialize Firebase with your config
     const firebaseConfig = {
-      apiKey: "AIzaSyCfFM6Vaoijcm6W4XuGpB1asdkzEClsd6g",
-      authDomain: "bunkerproduction-7313d.firebaseapp.com",
-      databaseURL: "https://bunkerproduction-7313d-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "bunkerproduction-7313d",
-      storageBucket: "bunkerproduction-7313d.appspot.com",
-      messagingSenderId: "291219581303",
-      appId: "1:291219581303:web:abd6d97534256664865972",
-      measurementId: "G-YWXRL7XGPG"
+      apiKey: process.env.REACT_APP_APIKEY,
+      authDomain: process.env.REACT_APP_AUTHDOMAIN,
+      databaseURL: process.env.REACT_APP_DATABASEURL,
+      projectId: process.env.REACT_APP_PROJECTID,
+      storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+      messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+      appId: process.env.REACT_APP_APPID,
+      measurementId: process.env.REACT_APP_MEASUREMENTID,
     };
 
     const app = initializeApp(firebaseConfig);
@@ -24,7 +32,7 @@ class Fire {
       const newDataRef = push(ref(this.database, path), data);
       return newDataRef.key;
     } catch (error) {
-      console.error('Error adding data: ', error);
+      console.error("Error adding data: ", error);
       throw error;
     }
   }
@@ -34,7 +42,7 @@ class Fire {
       const dataSnapshot = await get(ref(this.database, path));
       return dataSnapshot.val();
     } catch (error) {
-      console.error('Error getting data: ', error);
+      console.error("Error getting data: ", error);
       throw error;
     }
   }
@@ -42,9 +50,9 @@ class Fire {
   async updateData(path, newData) {
     try {
       await update(ref(this.database, path), newData);
-      console.log('Data successfully updated!');
+      console.log("Data successfully updated!");
     } catch (error) {
-      console.error('Error updating data: ', error);
+      console.error("Error updating data: ", error);
       throw error;
     }
   }
@@ -52,9 +60,9 @@ class Fire {
   async deleteData(path) {
     try {
       await remove(ref(this.database, path));
-      console.log('Data successfully deleted!');
+      console.log("Data successfully deleted!");
     } catch (error) {
-      console.error('Error deleting data: ', error);
+      console.error("Error deleting data: ", error);
       throw error;
     }
   }
@@ -67,7 +75,7 @@ class Fire {
         callback(data);
       });
     } catch (error) {
-      console.error('Error listening for changes: ', error);
+      console.error("Error listening for changes: ", error);
       throw error;
     }
   }

@@ -169,56 +169,6 @@ const YourReactComponent = () => {
 
   return (
     <>
-      <div>
-        <h1>Your React Component</h1>
-        <p>Fetched Data: {JSON.stringify(data)}</p>
-        <p>Newly Created Data Key: {newDataKey}</p>
-        <button onClick={handleCreateData}>Create Data</button>
-        <button onClick={handleUpdateData}>Update Data</button>
-        <input
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
-        {/* {data != null &&
-          Object.entries(data) &&
-          Object.entries(data).map((da) => {
-            console.log(da[0] + "+" + da[1].name);
-
-            return (
-              <>
-                <h1>{da[1].name}</h1>
-                <button onClick={() => handleDeleteData(da[0])}>
-                  Delete Data
-                </button>
-              </>
-            );
-          })} */}
-      </div>
-      {/* <script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.3.2/ckeditor.js"
-      ></script> */}
-      {/* <div className="col-lg-12 page-main">
-        <div className="new-post">
-          <input
-            type="text"
-            className="title-input"
-            placeholder="Post title"
-            id="post_title"
-            name="post_title"
-          />
-
-          <textarea id="post_text" className="post-area"></textarea>
-
-          <button id="add_btn" className="add-btn">
-            <i className="fa fa-plus"></i> Add Post
-          </button>
-        </div>
-      </div> */}
-      <br />
-      <br />
-      <br />
       <br />
       <br />
       <CKEditor
@@ -260,7 +210,6 @@ const YourReactComponent = () => {
             "plugins: ",
             ClassicEditor.builtinPlugins.map((plugin) => plugin.pluginName)
           );
-          
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
@@ -280,20 +229,19 @@ const YourReactComponent = () => {
       <br />
       <button onClick={submit}>Add blog post</button>
       <br />
-      <br />
-      <br />
-      <br />
-      <div className="wrap-result">
-        {/* <div dangerouslySetInnerHTML={{ __html: textEditor }}></div> */}
-        <Idk htmlString={textEditor} />
-        {/* {textEditor && textEditor.map((item, id) => {
-        return (
-          <div key={id} className="result-card">
-            <button onClick={()=>Delete(item.id)}>Delete</button>
+      <div className="section">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-10">
+              <div className="content">
+                <Idk htmlString={textEditor} />
+              </div>
+            </div>
           </div>
-        );
-      })} */}
+        </div>
       </div>
+      <hr />
+      <hr />
     </>
   );
 };
