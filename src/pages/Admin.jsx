@@ -6,18 +6,15 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Idk from "../components/Idk";
 import Select from "react-select";
 import { toast } from "react-toastify";
+import { useAuthState } from "react-firebase-hooks/auth";
 
+const fire = new Fire();
 const YourReactComponent = () => {
   const [data, setData] = useState([]);
   const [newDataKey, setNewDataKey] = useState(null);
+  const [user, loading, error] = useAuthState(fire.getuser());
 
   useEffect(() => {
-    // CKEDITOR.replace("post_text", {
-    //   language: "en",
-    //   uiColor: "#dddddd",
-    //   height: 500,
-    //   resize_dir: "vertical",
-    // });
     const fetchData = async () => {
       try {
         const dbHandler = new Fire();
@@ -40,9 +37,14 @@ const YourReactComponent = () => {
         console.error("Error:", error);
       }
     };
+    console.log(user);
 
     fetchData();
   }, []); // Run once on component mount
+
+  useEffect(() => {
+    if (user && user.uid == process.env.REACT_APP_ID) setLogged(true);
+  }, [, user]);
 
   const handleCreateData = async () => {
     try {
@@ -139,100 +141,122 @@ const YourReactComponent = () => {
     toast("e top!");
   };
 
+  const [logged, setLogged] = useState(false);
+  const login = async () => {
+    const fire = new Fire();
+    const newUser = await fire.loginWithGoogle();
+    if (newUser.uid == process.env.REACT_APP_ID) setLogged(true);
+    console.log(newUser);
+  };
+
   return (
     <>
       <br />
       <br />
-      <CKEditor
-        editor={ClassicEditor}
-        config={{
-          toolbar: [
-            "heading",
-            "|",
-            "bold",
-            "italic",
-            "link",
-            "bulletedList",
-            "numberedList",
-            "blockQuote",
-            "ckfinder",
-            "|",
-            "imageTextAlternative",
-            "imageUpload",
-            "imageStyle:full",
-            "imageStyle:side",
-            "|",
-            "mediaEmbed",
-            "insertTable",
-            "tableColumn",
-            "tableRow",
-            "mergeTableCells",
-            "|",
-            "undo",
-            "redo",
-          ],
-        }}
-        onInit={(editor) => {
-          console.log("Editor is ready to use!", editor);
-          console.log(
-            "toolbar: ",
-            Array.from(editor.ui.componentFactory.names())
-          );
-          console.log(
-            "plugins: ",
-            ClassicEditor.builtinPlugins.map((plugin) => plugin.pluginName)
-          );
-        }}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          console.log(data);
-          setTextEditor(data);
-        }}
-        onBlur={(editor) => {
-          console.log("Blur.", editor);
-        }}
-        onFocus={(editor) => {
-          console.log("Focus.", editor);
-        }}
-        onReady={(e) => {
-          console.log("GATAAA: ", e);
-        }}
-      />
-      <h1>Category: </h1>
-      <Select
-        options={categories}
-        onChange={(e) => {
-          setCategory(e.value);
-        }}
-      />
 
-      <br />
-      <br />
-      <br />
-      <br />
-      <button onClick={submit}>Add blog post</button>
-      <br />
-      <div className="section">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-10">
-              <div className="content">
-                <Idk htmlString={textEditor} />
+      {logged ? (
+        <div>
+          <CKEditor
+            editor={ClassicEditor}
+            config={{
+              toolbar: [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+                "ckfinder",
+                "|",
+                "imageTextAlternative",
+                "imageUpload",
+                "imageStyle:full",
+                "imageStyle:side",
+                "|",
+                "mediaEmbed",
+                "insertTable",
+                "tableColumn",
+                "tableRow",
+                "mergeTableCells",
+                "|",
+                "undo",
+                "redo",
+              ],
+            }}
+            onInit={(editor) => {
+              console.log("Editor is ready to use!", editor);
+              console.log(
+                "toolbar: ",
+                Array.from(editor.ui.componentFactory.names())
+              );
+              console.log(
+                "plugins: ",
+                ClassicEditor.builtinPlugins.map((plugin) => plugin.pluginName)
+              );
+            }}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              console.log(data);
+              setTextEditor(data);
+            }}
+            onBlur={(editor) => {
+              console.log("Blur.", editor);
+            }}
+            onFocus={(editor) => {
+              console.log("Focus.", editor);
+            }}
+            onReady={(e) => {
+              console.log("GATAAA: ", e);
+            }}
+          />
+          <h1>Category: </h1>
+          <Select
+            options={categories}
+            onChange={(e) => {
+              setCategory(e.value);
+            }}
+          />
+
+          <br />
+          <br />
+          <br />
+          <br />
+          <button onClick={submit}>Add blog post</button>
+          <br />
+          <div className="section">
+            <div className="container">
+              <div className="row justify-content-center">
+                <div className="col-lg-10">
+                  <div className="content">
+                    <Idk htmlString={textEditor} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <hr />
+          <hr />
+          <br />
+          <br />
+          <br />
+          <div>
+            <h1>Add Category</h1>
+            <input type="text" onChange={(e) => setCat(e.target.value)} />
+            <button onClick={submitCat}>submit category</button>
+          </div>
         </div>
-      </div>
-      <hr />
-      <hr />
-      <br />
-      <br />
-      <br />
-      <div>
-        <h1>Add Category</h1>
-        <input type="text" onChange={(e) => setCat(e.target.value)} />
-        <button onClick={submitCat}>submit category</button>
-      </div>
+      ) : (
+        <>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <button onClick={login}>login</button>
+        </>
+      )}
     </>
   );
 };

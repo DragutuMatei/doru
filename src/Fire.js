@@ -7,7 +7,14 @@ import {
   update,
   remove,
   onValue,
+  query,
 } from "firebase/database";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 
 class Fire {
   constructor() {
@@ -25,8 +32,31 @@ class Fire {
 
     const app = initializeApp(firebaseConfig);
     this.database = getDatabase(app);
+    this.googleProvider = new GoogleAuthProvider();
+    this.auth = getAuth(app);
   }
 
+
+  async logout() {
+    await signOut(this.auth);
+  }
+
+  getuser() {
+    return this.auth;
+  } 
+
+  async loginWithGoogle() {
+    try {
+      const result = await signInWithPopup(this.auth, this.googleProvider);
+      const user = result.user;
+      console.log("User logged in successfully:", user);
+      return user;
+    } catch (error) {
+      console.error("Error logging in with Google:", error);
+      throw error;
+    }
+  }
+  
   async createData(path, data) {
     try {
       const newDataRef = push(ref(this.database, path), data);
