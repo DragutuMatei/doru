@@ -14,8 +14,8 @@ function BlogPost() {
         const dbHandler = new Fire();
 
         const fetchedData = await dbHandler.getData(`/blog/${id}`);
-        setData(Object.entries(fetchedData)[0][1]);
-        console.log("Data:", Object.entries(fetchedData)[0][1]);
+        setData(fetchedData.text);
+        console.log("Data:", fetchedData);
 
         // dbHandler.listenForChanges(`/blog`, (changedData) => {
         //   setData(Object.entries(changedData)[0][1].text);
