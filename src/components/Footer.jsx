@@ -59,7 +59,7 @@ function Footer() {
               </ul>
             </div>
           </div>
-          <div className="col-lg-4 col-md-12 newsletter-form">
+          {/* <div className="col-lg-4 col-md-12 newsletter-form">
             <div style={{ backgroundColor: "#F4F4F4", padding: "35px" }}>
               <h5 className="mb-4 text-primary font-secondary">Subscribe</h5>
               <div className="pe-0 pe-xl-5">
@@ -104,7 +104,7 @@ function Footer() {
                 aliquyam erat
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="row align-items-center mt-5 text-center text-md-start">
           <div className="col-lg-4">
