@@ -40,7 +40,7 @@ const YourReactComponent = () => {
     console.log(user);
 
     fetchData();
-  }, []); // Run once on component mount
+  }, []);
 
   useEffect(() => {
     if (user && user.uid == process.env.REACT_APP_ID) setLogged(true);

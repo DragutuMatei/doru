@@ -554,9 +554,9 @@ function Blog() {
                   <span>Latest Article</span>
                 </h5>
 
-                {data != null &&
-                  Object.entries(data) &&
-                  Object.entries(data)
+                {oldData != null &&
+                  Object.entries(oldData) &&
+                  Object.entries(oldData)
                     .reverse()
                     .map((da, index) => {
                       if (index < 3) {
