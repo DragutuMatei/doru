@@ -558,6 +558,9 @@ function Blog() {
                   Object.entries(oldData) &&
                   Object.entries(oldData)
                     .reverse()
+                    .sort(function (a, b) {
+                      return b.timestamp - a.timestamp;
+                    })
                     .map((da, index) => {
                       if (index < 3) {
                         const $ = cheerio.load(da[1].text);
