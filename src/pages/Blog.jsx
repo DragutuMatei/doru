@@ -210,7 +210,7 @@ function Blog() {
                                     />
                                   </div>
                                   <div className="pt-4">
-                                    <p className="mb-3">15 Mar, 2020</p>
+                                    <p className="mb-3">{da[1].data}</p>
                                     <h2 className="h4">
                                       <Link
                                         className="text-black"
@@ -554,7 +554,52 @@ function Blog() {
                   <span>Latest Article</span>
                 </h5>
 
-                <ul className="list-unstyled widget-list">
+                {data != null &&
+                  Object.entries(data) &&
+                  Object.entries(data)
+                    .reverse()
+                    .map((da, index) => {
+                      if (index < 3) {
+                        const $ = cheerio.load(da[1].text);
+                        const h2 = $("h2").first().text();
+
+                        return (
+                          <>
+                            <ul className="list-unstyled widget-list">
+                              <li className="d-flex widget-post align-items-center">
+                                <Link
+                                  className="text-black"
+                                  to={`/blog/${da[0]}`}
+                                >
+                                  <div className="widget-post-image flex-shrink-0 me-3">
+                                    <img
+                                      className="rounded"
+                                      loading="lazy"
+                                      decoding="async"
+                                      src={require("../images/blog/post-4.jpg")}
+                                      alt="Post Thumbnail"
+                                    />
+                                  </div>
+                                </Link>
+                                <div className="flex-grow-1">
+                                  <h5 className="h6 mb-0">
+                                    <Link
+                                      className="text-black"
+                                      to={`/blog/${da[0]}`}
+                                    >
+                                      {h2}
+                                    </Link>
+                                  </h5>
+                                  <small>{da[1].data}</small>
+                                </div>
+                              </li>
+                            </ul>
+                          </>
+                        );
+                      }
+                    })}
+
+                {/* <ul className="list-unstyled widget-list">
                   <li className="d-flex widget-post align-items-center">
                     <Link className="text-black" to="/blog/elements/">
                       <div className="widget-post-image flex-shrink-0 me-3">
@@ -623,7 +668,7 @@ function Blog() {
                       <small>March 14, 2020</small>
                     </div>
                   </li>
-                </ul>
+                </ul> */}
               </div>
               <div className="widget">
                 <h4 className="widget-title">
