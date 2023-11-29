@@ -114,18 +114,13 @@ const YourReactComponent = () => {
       const newDataId = await dbHandler.createData("/blog", data);
       console.log("e ok");
       toast("e ok");
-      // setNewDataKey(newDataId);
+      setNewDataKey(newDataId);
       setTextEditor([]);
     } catch (error) {
       console.error("Error:", error);
     }
     // console.("e ok2")
   };
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
 
   const categories = [
     { value: "x1", label: "x1" },
@@ -135,6 +130,15 @@ const YourReactComponent = () => {
 
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState([]);
+
+  const [cat, setCat] = useState("");
+
+  const submitCat = async () => {
+    const dbHandler = new Fire();
+    await dbHandler.createData("/categories", { category: cat });
+    toast("e top!");
+  };
+
   return (
     <>
       <br />
@@ -202,19 +206,9 @@ const YourReactComponent = () => {
         }}
       />
 
-      <h1>TAGS: </h1>
-      <Select
-        options={options}
-        isMulti
-        onChange={(e) => {
-          let tags = [];
-          e.forEach((option) => {
-            tags.push(option.value);
-          });
-          setTags(tags);
-        }}
-      />
-
+      <br />
+      <br />
+      <br />
       <br />
       <button onClick={submit}>Add blog post</button>
       <br />
@@ -231,6 +225,14 @@ const YourReactComponent = () => {
       </div>
       <hr />
       <hr />
+      <br />
+      <br />
+      <br />
+      <div>
+        <h1>Add Category</h1>
+        <input type="text" onChange={(e) => setCat(e.target.value)} />
+        <button onClick={submitCat}>submit category</button>
+      </div>
     </>
   );
 };

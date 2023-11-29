@@ -24,7 +24,7 @@ function Blog() {
   };
 
   const [oldData, setOldData] = useState([]);
-
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,6 +33,9 @@ function Blog() {
         const fetchedData = await dbHandler.getData(`/blog`);
         setData(fetchedData);
         setOldData(fetchedData);
+
+        const fetchedData1 = await dbHandler.getData(`/category`);
+        setCategories(fetchedData1);
 
         // Object.entries(fetchedData).map((da) => {
         //   console.log(da[0] + "+" + da[1].name);
@@ -43,6 +46,10 @@ function Blog() {
           setData(changedData);
           setOldData(changedData);
         });
+        dbHandler.listenForChanges("/categories", (changedData) => {
+          setCategories(changedData);
+          console.log(changedData);
+        });
       } catch (error) {
         console.error("Error:", error);
       }
@@ -50,6 +57,22 @@ function Blog() {
 
     fetchData();
   }, []);
+
+  const filterCategory = (cat) => {
+    console.log(cat);
+    if (cat === "toate postarile") {
+      setData(oldData);
+      return;
+    }
+    const newdata = Object.entries(oldData).filter(
+      (dat) => dat[1].category == cat
+    );
+    let hh = {};
+    newdata.forEach((ok) => {
+      hh[ok[0]] = ok[1];
+    });
+    setData(hh);
+  };
   return (
     <>
       <section className="page-header bg-tertiary">
@@ -439,19 +462,21 @@ function Blog() {
                   <span>Category</span>
                 </h5>
                 <ul className="list-unstyled widget-list">
-                  <li
-                    onClick={() => {
-                      // setFil({ category: "x1" })
-                      const newdata = Object.entries(oldData).filter(
-                        (dat) => dat[1].category == "x1"
+                  <li onClick={() => filterCategory("toate postarile")}>
+                    <Link to={"#"}>Toate postarile</Link>
+                  </li>
+                  {categories != null &&
+                    Object.entries(categories) &&
+                    Object.entries(categories).map((cat) => {
+                      return (
+                        <li onClick={() => filterCategory(cat[1].category)}>
+                          <Link to={"#"}>{cat[1].category}</Link>
+                        </li>
                       );
-                      // setFil((old) => [{ category: "x1" }, ...old]);
-                      // setFilters();
-                      let hh = {};
-                      newdata.forEach((ok) => {
-                        hh[ok[0]] = ok[1];
-                      });
-                      setData(hh);
+                    })}
+                  {/* <li
+                    onClick={() => {
+                      filterCategory("x1");
                     }}
                   >
                     <Link to="#!">
@@ -460,16 +485,7 @@ function Blog() {
                   </li>{" "}
                   <li
                     onClick={() => {
-                      const newdata = Object.entries(oldData).filter(
-                        (dat) => dat[1].category == "x2"
-                      );
-                      // setFil((old) => [{ category: "x1" }, ...old]);
-                      // setFilters();
-                      let hh = {};
-                      newdata.forEach((ok) => {
-                        hh[ok[0]] = ok[1];
-                      });
-                      setData(hh);
+                      filterCategory("x2");
                     }}
                   >
                     <Link to="#!">
@@ -478,8 +494,7 @@ function Blog() {
                   </li>
                   <li
                     onClick={() => {
-                      setFil((old) => [{ category: "x3" }, ...old]);
-                      setFilters();
+                      filterCategory("x3");
                     }}
                   >
                     <Link to="#!">
@@ -488,8 +503,7 @@ function Blog() {
                   </li>
                   <li
                     onClick={() => {
-                      setFil((old) => [{ category: "x4" }, ...old]);
-                      setFilters();
+                      filterCategory("x4");
                     }}
                   >
                     <Link to="#!">
@@ -498,17 +512,16 @@ function Blog() {
                   </li>
                   <li
                     onClick={() => {
-                      setFil((old) => [{ category: "x5" }, ...old]);
-                      setFilters();
+                      filterCategory("x5");
                     }}
                   >
                     <Link to="#!">
                       Videography <small className="ml-auto">(1)</small>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
-              <div className="widget widget-tags">
+              {/* <div className="widget widget-tags">
                 <h4 className="widget-title">
                   <span>Tags</span>
                 </h4>
@@ -535,7 +548,7 @@ function Blog() {
                     <Link to="#!">Video</Link>
                   </li>
                 </ul>
-              </div>
+              </div> */}
               <div className="widget">
                 <h5 className="widget-title">
                   <span>Latest Article</span>
