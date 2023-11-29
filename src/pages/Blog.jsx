@@ -5,6 +5,25 @@ import cheerio from "cheerio";
 
 function Blog() {
   const [data, setData] = useState([]);
+  const [filters, setFil] = useState({});
+
+  const setFilters = () => {
+    const newdata = Object.entries(data).filter((item) => {
+      return filters.every((filter) => {
+        const filterName = Object.keys(filter)[0];
+        const filterValue = filter[filterName];
+
+        return (
+          item.hasOwnProperty(filterName) && item[filterName] === filterValue
+        );
+      });
+    });
+
+    setData(newdata);
+    console.log(newdata);
+  };
+
+  const [oldData, setOldData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,6 +32,7 @@ function Blog() {
 
         const fetchedData = await dbHandler.getData(`/blog`);
         setData(fetchedData);
+        setOldData(fetchedData);
 
         // Object.entries(fetchedData).map((da) => {
         //   console.log(da[0] + "+" + da[1].name);
@@ -21,7 +41,7 @@ function Blog() {
         // Example: Listen for real-time changes
         dbHandler.listenForChanges("/blog", (changedData) => {
           setData(changedData);
-          console.log(changedData);
+          setOldData(changedData);
         });
       } catch (error) {
         console.error("Error:", error);
@@ -32,104 +52,6 @@ function Blog() {
   }, []);
   return (
     <>
-      <div
-        className="modal applyLoanModal fade"
-        id="applyLoan"
-        tabindex="-1"
-        aria-labelledby="applyLoanLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header border-bottom-0">
-              <h4 className="modal-title" id="exampleModalLabel">
-                How much do you need?
-              </h4>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form action="#!" method="post">
-                <div className="row">
-                  <div className="col-lg-6 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_amount" className="form-label">
-                        Amount
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control shadow-none"
-                        id="loan_amount"
-                        placeholder="ex: 25000"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-6 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_how_long_for" className="form-label">
-                        How long for?
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control shadow-none"
-                        id="loan_how_long_for"
-                        placeholder="ex: 12"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-12 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_repayment" className="form-label">
-                        Repayment
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control shadow-none"
-                        id="loan_repayment"
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-6 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_full_name" className="form-label">
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control shadow-none"
-                        id="loan_full_name"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-6 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_email_address" className="form-label">
-                        Email address
-                      </label>
-                      <input
-                        type="email"
-                        className="form-control shadow-none"
-                        id="loan_email_address"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-12">
-                    <button type="submit" className="btn btn-primary w-100">
-                      Get Your Loan Now
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <section className="page-header bg-tertiary">
         <div className="container">
           <div className="row">
@@ -243,48 +165,51 @@ function Blog() {
                     Object.entries(data)
                       .reverse()
                       .map((da) => {
-                        const $ = cheerio.load(da[1].text);
-                        const h2 = $("h2").first().text();
-                        const p =
-                          $("p").first().text().length > 81
-                            ? $("p").first().text().slice(0, 81) + "..."
-                            : $("p").first().text();
+                        console.log(da[1].text);
+                        if (da[1].text) {
+                          const $ = cheerio.load(da[1].text);
+                          const h2 = $("h2").first().text();
+                          const p =
+                            $("p").first().text().length > 81
+                              ? $("p").first().text().slice(0, 81) + "..."
+                              : $("p").first().text();
 
-                        return (
-                          <>
-                            <div className="col-md-6" data-aos="fade">
-                              <article className="blog-post">
-                                <div className="post-slider slider-sm rounded">
-                                  <img
-                                    loading="lazy"
-                                    decoding="async"
-                                    src={require("../images/blog/post-4.jpg")}
-                                    alt="Post Thumbnail"
-                                  />
-                                </div>
-                                <div className="pt-4">
-                                  <p className="mb-3">15 Mar, 2020</p>
-                                  <h2 className="h4">
+                          return (
+                            <>
+                              <div className="col-md-6" data-aos="fade">
+                                <article className="blog-post">
+                                  <div className="post-slider slider-sm rounded">
+                                    <img
+                                      loading="lazy"
+                                      decoding="async"
+                                      src={require("../images/blog/post-4.jpg")}
+                                      alt="Post Thumbnail"
+                                    />
+                                  </div>
+                                  <div className="pt-4">
+                                    <p className="mb-3">15 Mar, 2020</p>
+                                    <h2 className="h4">
+                                      <Link
+                                        className="text-black"
+                                        to={`/blog/${da[0]}`}
+                                      >
+                                        {h2}
+                                      </Link>
+                                    </h2>
+                                    <p>{p}</p>
                                     <Link
-                                      className="text-black"
                                       to={`/blog/${da[0]}`}
+                                      className="text-primary fw-bold"
+                                      aria-label="Read the full article by clicking here"
                                     >
-                                      {h2}
+                                      Read More
                                     </Link>
-                                  </h2>
-                                  <p>{p}</p> 
-                                  <Link
-                                    to={`/blog/${da[0]}`}
-                                    className="text-primary fw-bold"
-                                    aria-label="Read the full article by clicking here"
-                                  >
-                                    Read More
-                                  </Link>
-                                </div>
-                              </article>
-                            </div>
-                          </>
-                        );
+                                  </div>
+                                </article>
+                              </div>
+                            </>
+                          );
+                        }
                       })}
 
                   {/* <div className="col-md-6" data-aos="fade">
@@ -514,27 +439,69 @@ function Blog() {
                   <span>Category</span>
                 </h5>
                 <ul className="list-unstyled widget-list">
-                  <li>
+                  <li
+                    onClick={() => {
+                      // setFil({ category: "x1" })
+                      const newdata = Object.entries(oldData).filter(
+                        (dat) => dat[1].category == "x1"
+                      );
+                      // setFil((old) => [{ category: "x1" }, ...old]);
+                      // setFilters();
+                      let hh = {};
+                      newdata.forEach((ok) => {
+                        hh[ok[0]] = ok[1];
+                      });
+                      setData(hh);
+                    }}
+                  >
                     <Link to="#!">
-                      Four seasone <small className="ml-auto">(1)</small>
+                      X1 <small className="ml-auto">(1)</small>
+                    </Link>
+                  </li>{" "}
+                  <li
+                    onClick={() => {
+                      const newdata = Object.entries(oldData).filter(
+                        (dat) => dat[1].category == "x2"
+                      );
+                      // setFil((old) => [{ category: "x1" }, ...old]);
+                      // setFilters();
+                      let hh = {};
+                      newdata.forEach((ok) => {
+                        hh[ok[0]] = ok[1];
+                      });
+                      setData(hh);
+                    }}
+                  >
+                    <Link to="#!">
+                      X2 <small className="ml-auto">(2)</small>
                     </Link>
                   </li>
-                  <li>
+                  <li
+                    onClick={() => {
+                      setFil((old) => [{ category: "x3" }, ...old]);
+                      setFilters();
+                    }}
+                  >
                     <Link to="#!">
-                      Newyork city <small className="ml-auto">(2)</small>
+                      X3 <small className="ml-auto">(1)</small>
                     </Link>
                   </li>
-                  <li>
+                  <li
+                    onClick={() => {
+                      setFil((old) => [{ category: "x4" }, ...old]);
+                      setFilters();
+                    }}
+                  >
                     <Link to="#!">
-                      Photobooth <small className="ml-auto">(1)</small>
+                      X4 <small className="ml-auto">(2)</small>
                     </Link>
                   </li>
-                  <li>
-                    <Link to="#!">
-                      Photography <small className="ml-auto">(2)</small>
-                    </Link>
-                  </li>
-                  <li>
+                  <li
+                    onClick={() => {
+                      setFil((old) => [{ category: "x5" }, ...old]);
+                      setFilters();
+                    }}
+                  >
                     <Link to="#!">
                       Videography <small className="ml-auto">(1)</small>
                     </Link>

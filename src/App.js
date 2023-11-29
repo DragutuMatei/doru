@@ -9,11 +9,14 @@ import "./css/style.scss";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Admin from "./pages/Admin";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <Router>
       <Navbar />
+      <ToastContainer draggable={true} position="top-center" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

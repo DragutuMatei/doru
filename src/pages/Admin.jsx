@@ -1,62 +1,11 @@
-// import React, { useEffect, useState } from "react";
-
-// import Fire from "../Fire";
-
-// function Admin() {
-//   const [name, setName] = useState("");
-//   const [data, setData] = useState([]);
-//   const submit = async () => {
-
-// const fire = new Fire();
-// await fire.createData("test", { name: name }).then(res => {
-//       console.log(res);
-//     });
-//   };
-
-//   useEffect(() => {
-//     const fire = new Fire();
-//     fire.listenForChanges("/test", (res) => {
-//       console.log(res)
-//       setData(res)
-//     })
-//   },[])
-
-//   return (
-//     <>
-//       <br />
-//       <br />
-//       <br />
-//       <br />
-//       <br />
-//       <br />
-//       <br />
-//       <br />
-//       <br />
-//       <br />
-//       <input type="text" onChange={(e) => setName(e.target.value)} />
-//       <button onClick={submit}>ok</button>
-//       <br />
-//       <br />
-//       <br />
-//       {
-//         // data&&data.map()
-//       }
-//       <br />
-//       <br />
-//       <br />
-//     </>
-//   );
-// }
-
-// export default Admin;
-// YourReactComponent.js
-
 import React, { useState, useEffect } from "react";
 import Fire from "../Fire";
 import "../css/admin.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Idk from "../components/Idk";
+import Select from "react-select";
+import { toast } from "react-toastify";
 
 const YourReactComponent = () => {
   const [data, setData] = useState([]);
@@ -154,19 +103,38 @@ const YourReactComponent = () => {
       ];
       today = dd + " " + monthsAbbreviated[mm] + ", " + yyyy;
 
-      const newDataId = await dbHandler.createData("/blog", {
+      const data = {
         text: textEditor,
         data: today,
-      });
+        tags,
+        category,
+        timestamp: new Date().getTime(),
+      };
+      console.log(data);
+      const newDataId = await dbHandler.createData("/blog", data);
       console.log("e ok");
-      setNewDataKey(newDataId);
+      toast("e ok");
+      // setNewDataKey(newDataId);
       setTextEditor([]);
     } catch (error) {
       console.error("Error:", error);
     }
     // console.("e ok2")
   };
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
 
+  const categories = [
+    { value: "x1", label: "x1" },
+    { value: "x2", label: "x2" },
+    { value: "x3", label: "x3" },
+  ];
+
+  const [category, setCategory] = useState("");
+  const [tags, setTags] = useState([]);
   return (
     <>
       <br />
@@ -226,6 +194,27 @@ const YourReactComponent = () => {
           console.log("GATAAA: ", e);
         }}
       />
+      <h1>Category: </h1>
+      <Select
+        options={categories}
+        onChange={(e) => {
+          setCategory(e.value);
+        }}
+      />
+
+      <h1>TAGS: </h1>
+      <Select
+        options={options}
+        isMulti
+        onChange={(e) => {
+          let tags = [];
+          e.forEach((option) => {
+            tags.push(option.value);
+          });
+          setTags(tags);
+        }}
+      />
+
       <br />
       <button onClick={submit}>Add blog post</button>
       <br />
