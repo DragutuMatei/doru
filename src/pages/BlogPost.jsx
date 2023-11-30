@@ -7,7 +7,7 @@ function BlogPost() {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [newDataKey, setNewDataKey] = useState(null);
-
+  const [allData, setAllData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -16,7 +16,7 @@ function BlogPost() {
         const fetchedData = await dbHandler.getData(`/blog/${id}`);
         setData(fetchedData.text);
         console.log("Data:", fetchedData);
-
+        setAllData(fetchedData);
         // dbHandler.listenForChanges(`/blog`, (changedData) => {
         //   setData(Object.entries(changedData)[0][1].text);
         //   console.log("change: ", Object.entries(changedData)[0][1].text);
@@ -71,6 +71,51 @@ function BlogPost() {
               </div> */}
               <div className="content">
                 <Idk htmlString={data} />
+
+                {allData &&
+                  allData.images &&
+                  allData.images.map((img) => {
+                    return (
+                      <>
+                        <img
+                          loading="lazy"
+                          decoding="async"
+                          className="w-100 d-block mb-4"
+                          src={img}
+                          alt="placeholder image"
+                        />{" "}
+                      </>
+                    );
+                  })}
+                {allData &&
+                  allData.videos &&
+                  allData.videos.map((video) => {
+                    return (
+                      <>
+                        <div
+                          style={{
+                            position: "relative",
+                            paddingBottom: "56.25%",
+                            height: 0,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <video
+                            style={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              border: 0,
+                            }}
+                            src={video}
+                            controls
+                          ></video>
+                        </div>
+                      </>
+                    );
+                  })}
 
                 {/* <h4 id="heading-example">Heading example</h4>
                 <p>

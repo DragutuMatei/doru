@@ -34,7 +34,7 @@ function Blog() {
         setData(fetchedData);
         setOldData(fetchedData);
 
-        const fetchedData1 = await dbHandler.getData(`/category`);
+        const fetchedData1 = await dbHandler.getData(`/categories`);
         setCategories(fetchedData1);
 
         // Object.entries(fetchedData).map((da) => {
@@ -58,6 +58,7 @@ function Blog() {
     fetchData();
   }, []);
 
+  
   const filterCategory = (cat) => {
     console.log(cat);
     if (cat === "toate postarile") {
@@ -205,7 +206,7 @@ function Blog() {
                                     <img
                                       loading="lazy"
                                       decoding="async"
-                                      src={require("../images/blog/post-4.jpg")}
+                                      src={da[1].images && da[1].images[0]}
                                       alt="Post Thumbnail"
                                     />
                                   </div>
