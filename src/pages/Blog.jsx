@@ -580,7 +580,7 @@ function Blog() {
                                       className="rounded"
                                       loading="lazy"
                                       decoding="async"
-                                      src={require("../images/blog/post-4.jpg")}
+                                      src={da[1].images && da[1].images[0]}
                                       alt="Post Thumbnail"
                                     />
                                   </div>
