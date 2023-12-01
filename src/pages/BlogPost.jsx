@@ -3,11 +3,36 @@ import Fire from "../Fire";
 import Idk from "../components/Idk";
 import { useParams } from "react-router-dom";
 
+import Carousel from "nuka-carousel";
+
+import ImageGallery from "react-image-gallery";
+// import stylesheet if you're not already using CSS @import
+// import "react-image-gallery/styles/css/image-gallery.css";
+
 function BlogPost() {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [newDataKey, setNewDataKey] = useState(null);
   const [allData, setAllData] = useState([]);
+
+  const mediaMatch = window.matchMedia("(min-width: 600px)");
+  const [matches, setMatches] = useState(mediaMatch.matches);
+
+  useEffect(() => {
+    const handler = (e) => setMatches(e.matches);
+    mediaMatch.addListener(handler);
+    return () => mediaMatch.removeListener(handler);
+  }, []); 
+  const styles = {
+    container: (mobile) => ({
+      alignContent: "center",
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "center",
+      height: mobile ? "600px" : {},
+    }),
+  };
+  const [images, setImages] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,6 +42,14 @@ function BlogPost() {
         setData(fetchedData.text);
         console.log("Data:", fetchedData);
         setAllData(fetchedData);
+        setImages(
+          fetchedData.images.map((img) => {
+            return {
+              original: img,
+              thumbnail: img,
+            };
+          })
+        );
         // dbHandler.listenForChanges(`/blog`, (changedData) => {
         //   setData(Object.entries(changedData)[0][1].text);
         //   console.log("change: ", Object.entries(changedData)[0][1].text);
@@ -28,6 +61,14 @@ function BlogPost() {
 
     fetchData();
   }, []);
+
+  // const images = allData.images.map((img) => {
+  //   return {
+  //     original: img,
+  //     thumbnail: img,
+  //   };
+  // });
+
   return (
     <>
       <div className="section">
@@ -71,8 +112,39 @@ function BlogPost() {
               </div> */}
               <div className="content">
                 <Idk htmlString={data} />
+                {allData && allData.images ? (
+                  <ImageGallery
+                    items={images}
+                    autoPlay={false}
+                    showPlayButton={true}
+                    showFullscreenButton={false}
+                    showBullets={false}
+                    showThumbnails={true}
+                    showNav={true}
+                    startIndex={0}
+                    slideDuration={750}
+                    slideInterval={7500}
+                    disableSwipe={false}
+                    renderItem={(item) => {
+                      return (
+                        <div
+                          className="image-gallery-image"
+                          style={styles.container(matches)}
+                        >
+                          <img
+                            loading="lazy"
+                            decoding="async"
+                            className="w-100 d-block mb-4"
+                            src={item.original}
+                            alt={item.originalAlt}
+                          />
+                        </div>
+                      );
+                    }}
+                  />
+                ) : null}
 
-                {allData &&
+                {/* {allData &&
                   allData.images &&
                   allData.images.map((img) => {
                     return (
@@ -86,37 +158,50 @@ function BlogPost() {
                         />{" "}
                       </>
                     );
-                  })}
-                {allData &&
-                  allData.videos &&
-                  allData.videos.map((video) => {
-                    return (
-                      <>
-                        <div
-                          style={{
-                            position: "relative",
-                            paddingBottom: "56.25%",
-                            height: 0,
-                            overflow: "hidden",
-                          }}
-                        >
-                          <video
-                            style={{
-                              position: "absolute",
-                              top: 0,
-                              left: 0,
-                              width: "100%",
-                              height: "100%",
-                              border: 0,
-                            }}
-                            src={video}
-                            controls
-                          ></video>
-                        </div>
-                      </>
-                    );
-                  })}
-
+                  })} */}
+                {allData && allData.videos ? (
+                  <Carousel
+                    defaultControlsConfig={{
+                      nextButtonText: ">",
+                      prevButtonText: "<",
+                      pagingDotsStyle: {
+                        fill: "white",
+                        opacity: 0.5,
+                        activeFill: "white",
+                      },
+                    }}
+                  >
+                    {allData &&
+                      allData.videos &&
+                      allData.videos.map((video) => {
+                        return (
+                          <>
+                            <div
+                              style={{
+                                position: "relative",
+                                paddingBottom: "56.25%",
+                                height: 0,
+                                overflow: "hidden",
+                              }}
+                            >
+                              <video
+                                style={{
+                                  position: "absolute",
+                                  top: 0,
+                                  left: 0,
+                                  width: "100%",
+                                  height: "100%",
+                                  border: 0,
+                                }}
+                                src={video}
+                                controls
+                              ></video>
+                            </div>
+                          </>
+                        );
+                      })}
+                  </Carousel>
+                ) : null}
                 {/* <h4 id="heading-example">Heading example</h4>
                 <p>
                   Here is example of hedings. You can use this heading by
