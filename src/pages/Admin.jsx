@@ -99,7 +99,7 @@ const YourReactComponent = () => {
 
       var today = new Date();
       var dd = String(today.getDate()).padStart(2, "0");
-      var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+      var mm = String(today.getMonth()).padStart(2, "0");
       var yyyy = today.getFullYear();
       const monthsAbbreviated = [
         "Jan",
@@ -115,6 +115,7 @@ const YourReactComponent = () => {
         "Nov",
         "Dec",
       ];
+
       today = dd + " " + monthsAbbreviated[mm] + ", " + yyyy;
 
       const storage = getStorage();
@@ -209,12 +210,6 @@ const YourReactComponent = () => {
                 "blockQuote",
                 "ckfinder",
                 "|",
-                "imageTextAlternative",
-                "imageUpload",
-                "imageStyle:full",
-                "imageStyle:side",
-                "|",
-                "mediaEmbed",
                 "insertTable",
                 "tableColumn",
                 "tableRow",
@@ -421,7 +416,7 @@ const YourReactComponent = () => {
                                         className="rounded"
                                         loading="lazy"
                                         decoding="async"
-                                        src={require("../images/blog/post-4.jpg")}
+                                        src={da[1].images && da[1].images[0]}
                                         alt="Post Thumbnail"
                                       />
                                     </div>
