@@ -200,102 +200,143 @@ const YourReactComponent = () => {
 
       {logged ? (
         <div>
-          <CKEditor
-            editor={ClassicEditor}
-            config={{
-              toolbar: [
-                "heading",
-                "|",
-                "bold",
-                "italic",
-                "link",
-                "bulletedList",
-                "numberedList",
-                "blockQuote",
-                "ckfinder",
-                "|",
-                "insertTable",
-                "tableColumn",
-                "tableRow",
-                "mergeTableCells",
-                "|",
-                "undo",
-                "redo",
-              ],
-            }}
-            onInit={(editor) => {
-              console.log("Editor is ready to use!", editor);
-              console.log(
-                "toolbar: ",
-                Array.from(editor.ui.componentFactory.names())
-              );
-              console.log(
-                "plugins: ",
-                ClassicEditor.builtinPlugins.map((plugin) => plugin.pluginName)
-              );
-            }}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              console.log(data);
-              setTextEditor(data);
-            }}
-            onBlur={(editor) => {
-              console.log("Blur.", editor);
-            }}
-            onFocus={(editor) => {
-              console.log("Focus.", editor);
-            }}
-            onReady={(e) => {
-              console.log("GATAAA: ", e);
-            }}
-          />
-          <h1>Category: </h1>
-          <Select
-            options={
-              categories != null &&
-              Object.entries(categories) &&
-              Object.entries(categories).map((cat) => {
-                return { value: cat[1].category, label: cat[1].category };
-              })
+          <div className="AdminArea">
+            <h1>Bine ai venit, {user && user.displayName}! </h1>
+            <h2>Din această zona poți publica postări pe blogul tău!</h2>
+            <br />
+
+            <h2>Textul blogului: </h2>
+            <CKEditor
+              editor={ClassicEditor}
+              config={{
+                toolbar: [
+                  "heading",
+                  "|",
+                  "bold",
+                  "italic",
+                  "link",
+                  "bulletedList",
+                  "numberedList",
+                  "blockQuote",
+                  "|",
+                  "insertTable",
+                  "tableColumn",
+                  "tableRow",
+                  "mergeTableCells",
+                  "|",
+                  "undo",
+                  "redo",
+                ],
+                
+              }
+              
             }
-            onChange={(e) => {
-              setCategoryInput(e.value);
-            }}
-          />
-          <h1>poze:</h1>
-          <input type="file" multiple onChange={handleFileInputChange} />
-          <h1>videos:</h1>
-          <input type="file" multiple onChange={videosupdates} />
-          <br />
-          <br />
-          <br />
-          <br />
-          {loading_submit ? (
-            <h1>Loading</h1>
-          ) : (
-            <button onClick={submit}>Add blog post</button>
-          )}
-          <br />
-          <div className="section">
-            <div className="container">
-              <div className="row justify-content-center">
-                <div className="col-lg-10">
-                  <div className="content">
-                    <Idk htmlString={textEditor} />
+              onInit={(editor) => {
+                console.log("Editor is ready to use!", editor);
+                console.log(
+                  "toolbar: ",
+                  Array.from(editor.ui.componentFactory.names())
+                );
+                console.log(
+                  "plugins: ",
+                  ClassicEditor.builtinPlugins.map(
+                    (plugin) => plugin.pluginName
+                  )
+                );
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                console.log(data);
+                setTextEditor(data);
+              }}
+              onBlur={(editor) => {
+                console.log("Blur.", editor);
+              }}
+              onFocus={(editor) => {
+                console.log("Focus.", editor);
+              }}
+              onReady={(e) => {
+                console.log("GATAAA: ", e);
+              }}
+            />
+            <div className="selectCategory">
+              <h2>Categorie pentru postare: </h2>
+              <Select
+                options={
+                  categories != null &&
+                  Object.entries(categories) &&
+                  Object.entries(categories).map((cat) => {
+                    return { value: cat[1].category, label: cat[1].category };
+                  })
+                }
+                onChange={(e) => {
+                  setCategoryInput(e.value);
+                }}
+              />
+            </div>
+            <div class="mb-3 dropdown">
+              <label for="pozeUpload" class="form-label">
+                {" "}
+                <h2>Poze:</h2>
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                id="pozeUpload"
+                multiple
+                onChange={handleFileInputChange}
+              />
+            </div>
+            <div class="mb-3 dropdown">
+              <label for="videoUpload" class="form-label">
+                {" "}
+                <h2>Videoclipuri:</h2>
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                id="videoUpload"
+                multiple
+                onChange={videosupdates}
+              />
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            {loading_submit ? (
+              <h1>Loading</h1>
+            ) : (
+              <button className="btn btn-primary" onClick={submit}>
+                Add blog post
+              </button>
+            )}
+
+            <div className="section">
+              <div className="container">
+                <div className="row justify-content-center">
+                  <div className="col-lg-10">
+                    <div className="content">
+                      <Idk htmlString={textEditor} />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <hr />
-          <hr />
-          <br />
-          <br />
-          <br />
-          <div>
-            <h1>Add Category</h1>
-            <input type="text" onChange={(e) => setCat(e.target.value)} />
-            <button onClick={submitCat}>submit category</button>
+
+            <br />
+            <div className="newCatt">
+              <h1>Adaugă o nouă categorie pe site</h1>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="numele noii categori"
+                onChange={(e) => setCat(e.target.value)}
+              />
+              <button className="btn btn-primary" onClick={submitCat}>
+                adaugă categorie
+              </button>
+            </div>
           </div>
           <div>
             <section className="section">
@@ -554,9 +595,24 @@ const YourReactComponent = () => {
           <br />
           <br />
           <br />
-          <br />
-          <br />
-          <button onClick={login}>login</button>
+          <div className="TitleLogin">
+            <p>
+              Nu ești conectat, pentru a accesa următoarea secțiune e necesară
+              conectarea!
+            </p>
+          </div>
+          <div className="centerButt">
+            <br />
+            <button className="btn btn-primary" onClick={login}>
+              login
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => (window.location.href = "/")}
+            >
+              Return to home
+            </button>
+          </div>
         </>
       )}
     </>
