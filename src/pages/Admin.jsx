@@ -94,6 +94,11 @@ const YourReactComponent = () => {
   const [loading_submit, setLoading] = useState(false);
   const submit = async () => {
     setLoading(true);
+    if (category_input == "") {
+      setLoading(false);
+      toast("Trebuie sa pui o categorie a postului");
+      return;
+    }
     try {
       const dbHandler = new Fire();
 
@@ -150,7 +155,6 @@ const YourReactComponent = () => {
       const data = {
         text: textEditor,
         data: today,
-        tags,
         category: category_input,
         timestamp: new Date().getTime(),
         images: downloadUrls,
@@ -227,10 +231,7 @@ const YourReactComponent = () => {
                   "undo",
                   "redo",
                 ],
-                
-              }
-              
-            }
+              }}
               onInit={(editor) => {
                 console.log("Editor is ready to use!", editor);
                 console.log(
