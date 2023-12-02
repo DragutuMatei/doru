@@ -1,7 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Fire from "../Fire";
+import { toast } from "react-toastify";
 
 function Contact() {
+  const submit = async (e) => {
+    e.preventDefault();
+    console.log(e.target[0].value);
+    console.log(e);
+    const fire = new Fire();
+    try {
+      await fire.createData("/contact", {
+        name: e.target[0].value,
+        email: e.target[1].value,
+        text: e.target[2].value,
+      });
+      toast("Message sent!");
+    } catch (error) {
+      alert(error);
+    }
+  };
   return (
     <>
       <section class="page-header bg-tertiary">
@@ -129,7 +147,7 @@ function Contact() {
                   </div>
                   <div class="col-lg-6">
                     <div class="contact-form">
-                      <form action="#!">
+                      <form onSubmit={submit}>
                         <div class="form-group mb-4 pb-2">
                           <label
                             for="exampleFormControlInput1"
@@ -138,6 +156,7 @@ function Contact() {
                             Full Name
                           </label>
                           <input
+                            required
                             type="text"
                             class="form-control shadow-none"
                             id="contact_name"
@@ -151,6 +170,7 @@ function Contact() {
                             Email address
                           </label>
                           <input
+                            required
                             type="email"
                             class="form-control shadow-none"
                             id="contact_email"
@@ -164,6 +184,7 @@ function Contact() {
                             Write Message
                           </label>
                           <textarea
+                            required
                             class="form-control shadow-none"
                             id="exampleFormControlTextarea1"
                             rows="3"

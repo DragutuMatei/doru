@@ -18,11 +18,17 @@ const YourReactComponent = () => {
   const [user, loading, error] = useAuthState(fire.getuser());
   const [categories, setCategories] = useState([]);
   const [oldData, setOldData] = useState([]);
+  const deleteContact = async (id) => {
+    const fire = new Fire();
+
+    await fire.deleteData(`/contact/${id}`);
+  };
   const deletePost = async (id) => {
     const fire = new Fire();
 
     await fire.deleteData(`/blog/${id}`);
   };
+  const [contacts, setContacts] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,9 +43,9 @@ const YourReactComponent = () => {
         const fetchedData1 = await dbHandler.getData(`/categories`);
         setCategories(fetchedData1);
         console.log("cate:", fetchedData1);
-        // Object.entries(fetchedData).map((da) => {
-        //   console.log(da[0] + "+" + da[1].name);
-        // });
+
+        const fetchedData2 = await dbHandler.getData(`/contact`);
+        setContacts(fetchedData2);
 
         // Example: Listen for real-time changes
         dbHandler.listenForChanges("/blog", (changedData) => {
@@ -50,6 +56,11 @@ const YourReactComponent = () => {
         dbHandler.listenForChanges("/categories", (changedData) => {
           setCategories(changedData);
           console.log("cate: ", changedData);
+        });
+
+        dbHandler.listenForChanges("/contact", (changedData) => {
+          setContacts(changedData);
+          console.log("contact: ", changedData);
         });
       } catch (error) {
         console.error("Error:", error);
@@ -163,7 +174,7 @@ const YourReactComponent = () => {
       console.log(data);
       const newDataId = await dbHandler.createData("/blog", data);
       console.log("e ok");
-      toast("e ok");
+      toast("Post uploaded!");
       setNewDataKey(newDataId);
       setTextEditor([]);
       setLoading(false);
@@ -205,7 +216,9 @@ const YourReactComponent = () => {
       {logged ? (
         <div>
           <div className="AdminArea">
-            <h1>Bine ai venit, {user && user.displayName}! </h1>
+            <h1>
+              Bine ai venit, <a href="#">{user && user.displayName}!</a>{" "}
+            </h1>
             <h2>Din această zona poți publica postări pe blogul tău!</h2>
             <br />
 
@@ -589,6 +602,38 @@ const YourReactComponent = () => {
                 </div>
               </div>
             </section>
+          </div>
+          <div style={{ padding: "20px 40px" }}>
+            <h1>Contacts:</h1>
+            <br />
+            <ul>
+              {contacts &&
+                Object.entries(contacts) &&
+                Object.entries(contacts)
+                  .reverse()
+                  .map((contact) => {
+                    return (
+                      <>
+                        <li>
+                          <h3>{contact[1].name}</h3>
+                          <h5>
+                            <a href={`mailto: ${contact[1].email}`}>
+                              {contact[1].email}
+                            </a>
+                          </h5>
+                          <p>{contact[1].text}</p>
+                          <button
+                            onClick={async () => deleteContact(contact[0])}
+                            className="btn btn-secondary"
+                          >
+                            Delete
+                          </button>
+                          <hr />
+                        </li>
+                      </>
+                    );
+                  })}
+            </ul>
           </div>
         </div>
       ) : (

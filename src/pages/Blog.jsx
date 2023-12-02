@@ -602,7 +602,6 @@ function Blog() {
                         );
                       }
                     })}
-
                 {/* <ul className="list-unstyled widget-list">
                   <li className="d-flex widget-post align-items-center">
                     <Link className="text-black" to="/blog/elements/">
