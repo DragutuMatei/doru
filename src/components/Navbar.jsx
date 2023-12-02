@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { Switch, useDarkreader } from "react-darkreader";
+
 function Navbar() {
+  const [isDark, { toggle }] = useDarkreader(true);
   return (
     <header className="navigation bg-tertiary">
       <nav className="navbar navbar-expand-xl navbar-light text-center py-3">
@@ -66,6 +69,25 @@ function Navbar() {
                   Contact
                 </Link>
               </li>
+
+              <li className="nav-item ">
+                <div style={
+                  {
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginTop: "10px",
+                    marginLeft: "10px"
+                  }
+                }>
+                  <Switch
+                    checked={isDark}
+                    onChange={toggle}
+                    styling="docusaurus"
+                  />
+                </div>
+              </li>
+
               {/* <li className="nav-item dropdown">
                 {" "}
                 <a
