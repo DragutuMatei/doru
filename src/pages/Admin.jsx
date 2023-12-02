@@ -273,6 +273,7 @@ const YourReactComponent = () => {
                 console.log("GATAAA: ", e);
               }}
             />
+            <br />
             <div className="selectCategory">
               <h2>Categorie pentru postare: </h2>
               <Select
@@ -288,6 +289,7 @@ const YourReactComponent = () => {
                 }}
               />
             </div>
+            <br />
             <div class="mb-3 dropdown">
               <label for="pozeUpload" class="form-label">
                 {" "}
@@ -301,6 +303,7 @@ const YourReactComponent = () => {
                 onChange={handleFileInputChange}
               />
             </div>
+            <br />
             <div class="mb-3 dropdown">
               <label for="videoUpload" class="form-label">
                 {" "}
@@ -314,8 +317,6 @@ const YourReactComponent = () => {
                 onChange={videosupdates}
               />
             </div>
-            <br />
-            <br />
             <br />
             <br />
             {loading_submit ? (
@@ -341,12 +342,14 @@ const YourReactComponent = () => {
             <br />
             <div className="newCatt">
               <h1>Adaugă o nouă categorie pe site</h1>
+              <br />
               <input
                 type="text"
                 className="form-control"
                 placeholder="numele noii categori"
                 onChange={(e) => setCat(e.target.value)}
               />
+              <br />
               <button className="btn btn-primary" onClick={submitCat}>
                 adaugă categorie
               </button>
@@ -436,166 +439,6 @@ const YourReactComponent = () => {
                               </li>
                             );
                           })}
-                      </ul>
-                    </div>
-                    <div className="widget">
-                      <h5 className="widget-title">
-                        <span>Latest Article</span>
-                      </h5>
-
-                      {oldData != null &&
-                        Object.entries(oldData) &&
-                        Object.entries(oldData)
-                          .reverse()
-                          .sort(function (a, b) {
-                            return b.timestamp - a.timestamp;
-                          })
-                          .map((da, index) => {
-                            if (index < 3) {
-                              const $ = cheerio.load(da[1].text);
-                              const h2 = $("h2").first().text();
-
-                              return (
-                                <>
-                                  <ul className="list-unstyled widget-list">
-                                    <li className="d-flex widget-post align-items-center">
-                                      <Link
-                                        className="text-black"
-                                        to={`/blog/${da[0]}`}
-                                      >
-                                        <div className="widget-post-image flex-shrink-0 me-3">
-                                          <img
-                                            className="rounded"
-                                            loading="lazy"
-                                            decoding="async"
-                                            src={
-                                              da[1].images && da[1].images[0]
-                                            }
-                                            alt="Post Thumbnail"
-                                          />
-                                        </div>
-                                      </Link>
-                                      <div className="flex-grow-1">
-                                        <h5 className="h6 mb-0">
-                                          <Link
-                                            className="text-black"
-                                            to={`/blog/${da[0]}`}
-                                          >
-                                            {h2}
-                                          </Link>
-                                        </h5>
-                                        <small>{da[1].data}</small>
-                                      </div>
-                                    </li>
-                                  </ul>
-                                </>
-                              );
-                            }
-                          })}
-
-                      {/* <ul className="list-unstyled widget-list">
-                  <li className="d-flex widget-post align-items-center">
-                    <Link className="text-black" to="/blog/elements/">
-                      <div className="widget-post-image flex-shrink-0 me-3">
-                        <img
-                          className="rounded"
-                          loading="lazy"
-                          decoding="async"
-                          src={require("../images/blog/post-4.jpg")}
-                          alt="Post Thumbnail"
-                        />
-                      </div>
-                    </Link>
-                    <div className="flex-grow-1">
-                      <h5 className="h6 mb-0">
-                        <Link className="text-black" to="/blog/1">
-                          Elements That You Can Use To Create A New Post On This
-                          Template.
-                        </Link>
-                      </h5>
-                      <small>March 15, 2020</small>
-                    </div>
-                  </li>
-                </ul>
-                <ul className="list-unstyled widget-list">
-                  <li className="d-flex widget-post align-items-center">
-                    <Link className="text-black" to="/blog/post-1/">
-                      <div className="widget-post-image flex-shrink-0 me-3">
-                        <img
-                          className="rounded"
-                          loading="lazy"
-                          decoding="async"
-                          src={require("../images/blog/post-1.jpg")}
-                          alt="Post Thumbnail"
-                        />
-                      </div>
-                    </Link>
-                    <div className="flex-grow-1">
-                      <h5 className="h6 mb-0">
-                        <Link className="text-black" to="/blog/1">
-                          Cheerful Loving Couple Bakers Drinking Coffee
-                        </Link>
-                      </h5>
-                      <small>March 14, 2020</small>
-                    </div>
-                  </li>
-                </ul>
-                <ul className="list-unstyled widget-list">
-                  <li className="d-flex widget-post align-items-center">
-                    <Link className="text-black" to="/blog/post-2/">
-                      <div className="widget-post-image flex-shrink-0 me-3">
-                        <img
-                          className="rounded"
-                          loading="lazy"
-                          decoding="async"
-                          src={require("../images/blog/post-2.jpg")}
-                          alt="Post Thumbnail"
-                        />
-                      </div>
-                    </Link>
-                    <div className="flex-grow-1">
-                      <h5 className="h6 mb-0">
-                        <Link className="text-black" to="/blog/1">
-                          Cheerful Loving Couple Bakers Drinking Coffee
-                        </Link>
-                      </h5>
-                      <small>March 14, 2020</small>
-                    </div>
-                  </li>
-                </ul> */}
-                    </div>
-                    <div className="widget">
-                      <h4 className="widget-title">
-                        <span>Social Links</span>
-                      </h4>
-                      <ul className="list-unstyled list-inline mb-0 social-icons">
-                        <li className="list-inline-item me-3">
-                          <Link
-                            title="Explorer Facebook Profile"
-                            className="text-black"
-                            to="https://facebook.com/"
-                          >
-                            <i className="fab fa-facebook-f"></i>
-                          </Link>
-                        </li>
-                        <li className="list-inline-item me-3">
-                          <Link
-                            title="Explorer Twitter Profile"
-                            className="text-black"
-                            to="https://twitter.com/"
-                          >
-                            <i className="fab fa-twitter"></i>
-                          </Link>
-                        </li>
-                        <li className="list-inline-item me-3">
-                          <Link
-                            title="Explorer Instagram Profile"
-                            className="text-black"
-                            to="https://instagram.com/"
-                          >
-                            <i className="fab fa-instagram"></i>
-                          </Link>
-                        </li>
                       </ul>
                     </div>
                   </div>
