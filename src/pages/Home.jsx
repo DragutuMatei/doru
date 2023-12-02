@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useWindowSize from "../components/WindowSize";
 
 function Home() {
   // const click = (index) => {
@@ -19,106 +20,18 @@ function Home() {
   //   details[index].classList.add("show");
   // };
 
+  const { width, height } = useWindowSize();
+  const [isMobile, setMobile] = useState(false);
+  useEffect(() => {
+    if (width < 720) {
+      setMobile(true);
+    } else {
+      setMobile(false);
+    }
+  }, [, width, height]);
+
   return (
     <>
-      <div
-        className="modal applyLoanModal fade"
-        id="applyLoan"
-        tabindex="-1"
-        aria-labelledby="applyLoanLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header border-bottom-0">
-              <h4 className="modal-title" id="exampleModalLabel">
-                How much do you need?
-              </h4>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form action="#!" method="post">
-                <div className="row">
-                  <div className="col-lg-6 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_amount" className="form-label">
-                        Amount
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control shadow-none"
-                        id="loan_amount"
-                        placeholder="ex: 25000"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-6 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_how_long_for" className="form-label">
-                        How long for?
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control shadow-none"
-                        id="loan_how_long_for"
-                        placeholder="ex: 12"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-12 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_repayment" className="form-label">
-                        Repayment
-                      </label>
-                      <input
-                        type="number"
-                        className="form-control shadow-none"
-                        id="loan_repayment"
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-6 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_full_name" className="form-label">
-                        Full Name
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control shadow-none"
-                        id="loan_full_name"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-6 mb-4 pb-2">
-                    <div className="form-group">
-                      <label for="loan_email_address" className="form-label">
-                        Email address
-                      </label>
-                      <input
-                        type="email"
-                        className="form-control shadow-none"
-                        id="loan_email_address"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-12">
-                    <button type="submit" className="btn btn-primary w-100">
-                      Get Your Loan Now
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <section className="banner bg-tertiary position-relative overflow-hidden">
         <div className="container">
           <div className="row align-items-center justify-content-center">
@@ -162,7 +75,8 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="has-shapes">
+        {/* {!isMobile && ( */}
+        <div className="has-shapes" style={{ opacity: isMobile ? 0.2 : 1 }}>
           <svg
             className="shape shape-left text-light"
             viewBox="0 0 192 752"
@@ -243,6 +157,7 @@ function Home() {
             />
           </svg>
         </div>
+        {/* )} */}
       </section>
 
       <section className="section">

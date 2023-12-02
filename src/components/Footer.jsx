@@ -1,176 +1,168 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="section-sm bg-tertiary">
+    <footer className="bg-tertiary" style={{ padding: "50px 0" }}>
       <div className="container">
-        <div className="row justify-content-between">
+        <div className="row justify-content-between ">
+          <div className="col-lg-2 col-md-4 w-auto col-6 mb-4">
+            <div className="footer-widget">
+              <Link to="/">
+                <img
+                  loading="prelaod"
+                  decoding="async"
+                  className="img-fluid"
+                  width="160"
+                  src={require("../images/logo.png")}
+                  alt="Bunker Production"
+                  style={{
+                    display: "flex",
+                    alignContent: "center",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                />
+              </Link>
+            </div>
+            <ul
+              className="list-unstyled list-inline mb-0 social-icons mt-lg-3"
+              style={{ width: 200 }}
+            >
+              <li className="list-inline-item me-3">
+                <Link
+                  title="Explorer Facebook Profile"
+                  className="text-black"
+                  to="https://facebook.com/"
+                >
+                  <i className="fab fa-facebook-f"></i>
+                </Link>
+              </li>
+              <li className="list-inline-item me-3">
+                <Link
+                  title="Explorer Twitter Profile"
+                  className="text-black"
+                  to="https://twitter.com/"
+                >
+                  <i className="fab fa-twitter"></i>
+                </Link>
+              </li>
+              <li className="list-inline-item me-3">
+                <Link
+                  title="Explorer Instagram Profile"
+                  className="text-black"
+                  to="https://instagram.com/"
+                >
+                  <i className="fab fa-instagram"></i>
+                </Link>
+              </li>
+            </ul>
+          </div>
           <div className="col-lg-2 col-md-4 col-6 mb-4">
             <div className="footer-widget">
-              <h5 className="mb-4 text-primary font-secondary">Service</h5>
               <ul className="list-unstyled">
                 <li className="mb-2">
-                  <a href="service-details.html">Personal loans</a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li className="mb-2">
-                  <a href="service-details.html">Home Equity Loans</a>
+                  <Link to="/about">About</Link>
                 </li>
                 <li className="mb-2">
-                  <a href="service-details.html">Student Loans</a>
+                  <Link to="/blog">Blog</Link>
                 </li>
                 <li className="mb-2">
-                  <a href="service-details.html">Mortgage Loans</a>
+                  <Link to="/how">How it works</Link>
                 </li>
                 <li className="mb-2">
-                  <a href="service-details.html">Payday Loans</a>
+                  <Link to="/contact">Contact</Link>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="col-lg-2 col-md-4 col-6 mb-4">
+          <div
+            className="col-lg-2 col-md-4 w-auto col-6 mb-4"
+            // style={{ width: "auto" }}
+          >
             <div className="footer-widget">
-              <h5 className="mb-4 text-primary font-secondary">About</h5>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <a href="#!">Benefits</a>
+              <ul
+                className="list-unstyled list-inline mb-0 text-lg-center"
+                style={{ width: 200 }}
+              >
+                <li className="list-inline-item me-4">
+                  <Link className="text-black" to="privacy-policy.html">
+                    Privacy Policy
+                  </Link>
                 </li>
-                <li className="mb-2">
-                  <a href="#!">Careers</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#!">Our Story</a>
-                </li>
-                <li className="mb-2">
-                  <a href="#!">Team</a>
+                <li className="list-inline-item me-4">
+                  <Link className="text-black" to="terms.html">
+                    Terms &amp; Conditions
+                  </Link>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="col-lg-2 col-md-4 col-6 mb-4">
+          {/* <div className="col-lg-2 col-md-4 col-6 mb-4">
             <div className="footer-widget">
               <h5 className="mb-4 text-primary font-secondary">Help</h5>
               <ul className="list-unstyled">
                 <li className="mb-2">
-                  <a href="contact.html">Contact Us</a>
+                  <Link to="contact.html">Contact Us</Link>
                 </li>
                 <li className="mb-2">
-                  <a href="faq.html">FAQs</a>
+                  <Link to="faq.html">FAQs</Link>
                 </li>
               </ul>
             </div>
-          </div>
-          {/* <div className="col-lg-4 col-md-12 newsletter-form">
-            <div style={{ backgroundColor: "#F4F4F4", padding: "35px" }}>
-              <h5 className="mb-4 text-primary font-secondary">Subscribe</h5>
-              <div className="pe-0 pe-xl-5">
-                <form
-                  action="#!"
-                  method="post"
-                  name="mc-embedded-subscribe-form"
-                  target="_blank"
-                >
-                  <div className="input-group mb-3">
-                    <input
-                      type="text"
-                      className="form-control shadow-none bg-white border-end-0"
-                      placeholder="Email address"
-                    />{" "}
-                    <span className="input-group-text border-0 p-0">
-                      <button
-                        className="input-group-text border-0 bg-primary"
-                        type="submit"
-                        name="subscribe"
-                        aria-label="Subscribe for Newsletter"
-                      >
-                        <i className="fas fa-arrow-right"></i>
-                      </button>
-                    </span>
-                  </div>
-                  <div
-                    style={{ position: "absolute", left: "-5000px" }}
-                    aria-hidden="true"
-                  >
-                    <input
-                      type="text"
-                      name="b_463ee871f45d2d93748e77cad_a0a2c6d074"
-                      tabindex="-1"
-                    />
-                  </div>
-                </form>
-              </div>
-              <p className="mb-0">
-                Lorem ipsum dolor sit amet, rdghds consetetur sadipscing elitr,
-                sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat
-              </p>
-            </div>
           </div> */}
         </div>
-        <div className="row align-items-center mt-5 text-center text-md-start">
-          <div className="col-lg-4">
-            <a href="index.html">
-              <img
-                loading="prelaod"
-                decoding="async"
-                className="img-fluid"
-                width="160"
-                src={require("../images/logo.png")}
-                alt="Bunker Production"
-                style={{
-                  display: "flex",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              />
-            </a>
-          </div>
+        {/* <div className="row align-items-center mt-5 text-center text-md-start">
+        
           <div className="col-lg-4 col-md-6 mt-4 mt-lg-0">
             <ul className="list-unstyled list-inline mb-0 text-lg-center">
               <li className="list-inline-item me-4">
-                <a className="text-black" href="privacy-policy.html">
+                <Link className="text-black" to="privacy-policy.html">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li className="list-inline-item me-4">
-                <a className="text-black" href="terms.html">
+                <Link className="text-black" to="terms.html">
                   Terms &amp; Conditions
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
           <div className="col-lg-4 col-md-6 text-md-end mt-4 mt-md-0">
             <ul className="list-unstyled list-inline mb-0 social-icons">
               <li className="list-inline-item me-3">
-                <a
+                <Link
                   title="Explorer Facebook Profile"
                   className="text-black"
-                  href="https://facebook.com/"
+                  to="https://facebook.com/"
                 >
                   <i className="fab fa-facebook-f"></i>
-                </a>
+                </Link>
               </li>
               <li className="list-inline-item me-3">
-                <a
+                <Link
                   title="Explorer Twitter Profile"
                   className="text-black"
-                  href="https://twitter.com/"
+                  to="https://twitter.com/"
                 >
                   <i className="fab fa-twitter"></i>
-                </a>
+                </Link>
               </li>
               <li className="list-inline-item me-3">
-                <a
+                <Link
                   title="Explorer Instagram Profile"
                   className="text-black"
-                  href="https://instagram.com/"
+                  to="https://instagram.com/"
                 >
                   <i className="fab fa-instagram"></i>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
       </div>
     </footer>
   );

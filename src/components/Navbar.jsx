@@ -71,15 +71,15 @@ function Navbar() {
               </li>
 
               <li className="nav-item ">
-                <div style={
-                  {
+                <div
+                  style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     marginTop: "10px",
-                    marginLeft: "10px"
-                  }
-                }>
+                    marginLeft: "10px",
+                  }}
+                >
                   <Switch
                     checked={isDark}
                     onChange={toggle}
