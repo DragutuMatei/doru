@@ -185,7 +185,11 @@ const YourReactComponent = () => {
   const login = async () => {
     const fire = new Fire();
     const newUser = await fire.loginWithGoogle();
-    if (newUser.uid == process.env.REACT_APP_ID || newUser.uid == process.env.REACT_APP_ID2) setLogged(true);
+    if (
+      newUser.uid == process.env.REACT_APP_ID ||
+      newUser.uid == process.env.REACT_APP_ID2
+    )
+      setLogged(true);
     console.log(newUser);
   };
   const [category_input, setCategoryInput] = useState("");
@@ -293,153 +297,148 @@ const YourReactComponent = () => {
             <input type="text" onChange={(e) => setCat(e.target.value)} />
             <button onClick={submitCat}>submit category</button>
           </div>
-        </div>
-      ) : (
-        <>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <button onClick={login}>login</button>
-        </>
-      )}
-      <div>
-        <section className="section">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-9">
-                <div className="me-lg-4">
-                  <div className="row gy-5">
-                    {data != null &&
-                      Object.entries(data) &&
-                      Object.entries(data)
-                        .reverse()
-                        .map((da) => {
-                          console.log(da[1].text);
-                          if (da[1].text) {
-                            const $ = cheerio.load(da[1].text);
-                            const h2 = $("h2").first().text();
-                            const p =
-                              $("p").first().text().length > 81
-                                ? $("p").first().text().slice(0, 81) + "..."
-                                : $("p").first().text();
+          <div>
+            <section className="section">
+              <div className="container">
+                <div className="row">
+                  <div className="col-lg-9">
+                    <div className="me-lg-4">
+                      <div className="row gy-5">
+                        {data != null &&
+                          Object.entries(data) &&
+                          Object.entries(data)
+                            .reverse()
+                            .map((da) => {
+                              console.log(da[1].text);
+                              if (da[1].text) {
+                                const $ = cheerio.load(da[1].text);
+                                const h2 = $("h2").first().text();
+                                const p =
+                                  $("p").first().text().length > 81
+                                    ? $("p").first().text().slice(0, 81) + "..."
+                                    : $("p").first().text();
 
-                            return (
-                              <>
-                                <div className="col-md-6" data-aos="fade">
-                                  <article className="blog-post">
-                                    <div className="post-slider slider-sm rounded">
-                                      <img
-                                        loading="lazy"
-                                        decoding="async"
-                                        src={da[1].images && da[1].images[0]}
-                                        alt="Post Thumbnail"
-                                      />
+                                return (
+                                  <>
+                                    <div className="col-md-6" data-aos="fade">
+                                      <article className="blog-post">
+                                        <div className="post-slider slider-sm rounded">
+                                          <img
+                                            loading="lazy"
+                                            decoding="async"
+                                            src={
+                                              da[1].images && da[1].images[0]
+                                            }
+                                            alt="Post Thumbnail"
+                                          />
+                                        </div>
+                                        <div className="pt-4">
+                                          <p className="mb-3">{da[1].data}</p>
+                                          <h2 className="h4">
+                                            <Link
+                                              className="text-black"
+                                              to={`/blog/${da[0]}`}
+                                            >
+                                              {h2}
+                                            </Link>
+                                          </h2>
+                                          <p>{p}</p>
+                                          <Link
+                                            to={`#`}
+                                            className="text-primary fw-bold"
+                                            aria-label="Read the full article by clicking here"
+                                            onClick={() => deletePost(da[0])}
+                                          >
+                                            Delete this post
+                                          </Link>
+                                        </div>
+                                      </article>
                                     </div>
-                                    <div className="pt-4">
-                                      <p className="mb-3">{da[1].data}</p>
-                                      <h2 className="h4">
-                                        <Link
-                                          className="text-black"
-                                          to={`/blog/${da[0]}`}
-                                        >
-                                          {h2}
-                                        </Link>
-                                      </h2>
-                                      <p>{p}</p>
-                                      <Link
-                                        to={`#`}
-                                        className="text-primary fw-bold"
-                                        aria-label="Read the full article by clicking here"
-                                        onClick={() => deletePost(da[0])}
-                                      >
-                                        Delete this post
-                                      </Link>
-                                    </div>
-                                  </article>
-                                </div>
-                              </>
-                            );
-                          }
-                        })}
+                                  </>
+                                );
+                              }
+                            })}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="widget widget-categories">
-                  <h5 className="widget-title">
-                    <span>Category</span>
-                  </h5>
-                  <ul className="list-unstyled widget-list">
-                    <li onClick={() => filterCategory("toate postarile")}>
-                      <Link to={"#"}>Toate postarile</Link>
-                    </li>
-                    {categories != null &&
-                      Object.entries(categories) &&
-                      Object.entries(categories).map((cat) => {
-                        return (
-                          <li onClick={() => filterCategory(cat[1].category)}>
-                            <Link to={"#"}>{cat[1].category}</Link>
-                          </li>
-                        );
-                      })}
-                  </ul>
-                </div>
-                <div className="widget">
-                  <h5 className="widget-title">
-                    <span>Latest Article</span>
-                  </h5>
+                  <div className="col-lg-3">
+                    <div className="widget widget-categories">
+                      <h5 className="widget-title">
+                        <span>Category</span>
+                      </h5>
+                      <ul className="list-unstyled widget-list">
+                        <li onClick={() => filterCategory("toate postarile")}>
+                          <Link to={"#"}>Toate postarile</Link>
+                        </li>
+                        {categories != null &&
+                          Object.entries(categories) &&
+                          Object.entries(categories).map((cat) => {
+                            return (
+                              <li
+                                onClick={() => filterCategory(cat[1].category)}
+                              >
+                                <Link to={"#"}>{cat[1].category}</Link>
+                              </li>
+                            );
+                          })}
+                      </ul>
+                    </div>
+                    <div className="widget">
+                      <h5 className="widget-title">
+                        <span>Latest Article</span>
+                      </h5>
 
-                  {oldData != null &&
-                    Object.entries(oldData) &&
-                    Object.entries(oldData)
-                      .reverse()
-                      .sort(function (a, b) {
-                        return b.timestamp - a.timestamp;
-                      })
-                      .map((da, index) => {
-                        if (index < 3) {
-                          const $ = cheerio.load(da[1].text);
-                          const h2 = $("h2").first().text();
+                      {oldData != null &&
+                        Object.entries(oldData) &&
+                        Object.entries(oldData)
+                          .reverse()
+                          .sort(function (a, b) {
+                            return b.timestamp - a.timestamp;
+                          })
+                          .map((da, index) => {
+                            if (index < 3) {
+                              const $ = cheerio.load(da[1].text);
+                              const h2 = $("h2").first().text();
 
-                          return (
-                            <>
-                              <ul className="list-unstyled widget-list">
-                                <li className="d-flex widget-post align-items-center">
-                                  <Link
-                                    className="text-black"
-                                    to={`/blog/${da[0]}`}
-                                  >
-                                    <div className="widget-post-image flex-shrink-0 me-3">
-                                      <img
-                                        className="rounded"
-                                        loading="lazy"
-                                        decoding="async"
-                                        src={da[1].images && da[1].images[0]}
-                                        alt="Post Thumbnail"
-                                      />
-                                    </div>
-                                  </Link>
-                                  <div className="flex-grow-1">
-                                    <h5 className="h6 mb-0">
+                              return (
+                                <>
+                                  <ul className="list-unstyled widget-list">
+                                    <li className="d-flex widget-post align-items-center">
                                       <Link
                                         className="text-black"
                                         to={`/blog/${da[0]}`}
                                       >
-                                        {h2}
+                                        <div className="widget-post-image flex-shrink-0 me-3">
+                                          <img
+                                            className="rounded"
+                                            loading="lazy"
+                                            decoding="async"
+                                            src={
+                                              da[1].images && da[1].images[0]
+                                            }
+                                            alt="Post Thumbnail"
+                                          />
+                                        </div>
                                       </Link>
-                                    </h5>
-                                    <small>{da[1].data}</small>
-                                  </div>
-                                </li>
-                              </ul>
-                            </>
-                          );
-                        }
-                      })}
+                                      <div className="flex-grow-1">
+                                        <h5 className="h6 mb-0">
+                                          <Link
+                                            className="text-black"
+                                            to={`/blog/${da[0]}`}
+                                          >
+                                            {h2}
+                                          </Link>
+                                        </h5>
+                                        <small>{da[1].data}</small>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </>
+                              );
+                            }
+                          })}
 
-                  {/* <ul className="list-unstyled widget-list">
+                      {/* <ul className="list-unstyled widget-list">
                   <li className="d-flex widget-post align-items-center">
                     <Link className="text-black" to="/blog/elements/">
                       <div className="widget-post-image flex-shrink-0 me-3">
@@ -509,46 +508,57 @@ const YourReactComponent = () => {
                     </div>
                   </li>
                 </ul> */}
-                </div>
-                <div className="widget">
-                  <h4 className="widget-title">
-                    <span>Social Links</span>
-                  </h4>
-                  <ul className="list-unstyled list-inline mb-0 social-icons">
-                    <li className="list-inline-item me-3">
-                      <Link
-                        title="Explorer Facebook Profile"
-                        className="text-black"
-                        to="https://facebook.com/"
-                      >
-                        <i className="fab fa-facebook-f"></i>
-                      </Link>
-                    </li>
-                    <li className="list-inline-item me-3">
-                      <Link
-                        title="Explorer Twitter Profile"
-                        className="text-black"
-                        to="https://twitter.com/"
-                      >
-                        <i className="fab fa-twitter"></i>
-                      </Link>
-                    </li>
-                    <li className="list-inline-item me-3">
-                      <Link
-                        title="Explorer Instagram Profile"
-                        className="text-black"
-                        to="https://instagram.com/"
-                      >
-                        <i className="fab fa-instagram"></i>
-                      </Link>
-                    </li>
-                  </ul>
+                    </div>
+                    <div className="widget">
+                      <h4 className="widget-title">
+                        <span>Social Links</span>
+                      </h4>
+                      <ul className="list-unstyled list-inline mb-0 social-icons">
+                        <li className="list-inline-item me-3">
+                          <Link
+                            title="Explorer Facebook Profile"
+                            className="text-black"
+                            to="https://facebook.com/"
+                          >
+                            <i className="fab fa-facebook-f"></i>
+                          </Link>
+                        </li>
+                        <li className="list-inline-item me-3">
+                          <Link
+                            title="Explorer Twitter Profile"
+                            className="text-black"
+                            to="https://twitter.com/"
+                          >
+                            <i className="fab fa-twitter"></i>
+                          </Link>
+                        </li>
+                        <li className="list-inline-item me-3">
+                          <Link
+                            title="Explorer Instagram Profile"
+                            className="text-black"
+                            to="https://instagram.com/"
+                          >
+                            <i className="fab fa-instagram"></i>
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
-        </section>
-      </div>
+        </div>
+      ) : (
+        <>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <button onClick={login}>login</button>
+        </>
+      )}
     </>
   );
 };
