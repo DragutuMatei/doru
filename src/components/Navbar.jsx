@@ -11,9 +11,14 @@ function Navbar() {
               loading="prelaod"
               decoding="async"
               className="img-fluid"
-              width="160"
+              width="130"
               src={require("../images/logo.png")}
-              alt="Wallet"
+              alt="Bunker Production"
+              style={{
+                alignContent: "center",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             />
           </Link>
           <button

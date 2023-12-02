@@ -115,7 +115,13 @@ function Footer() {
                 className="img-fluid"
                 width="160"
                 src={require("../images/logo.png")}
-                alt="Wallet"
+                alt="Bunker Production"
+                style={{
+                  display: "flex",
+                  alignContent: "center",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               />
             </a>
           </div>
