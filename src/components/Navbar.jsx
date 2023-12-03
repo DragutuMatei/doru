@@ -71,7 +71,7 @@ function Navbar() {
               </li>
 
               <li className="nav-item ">
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -79,13 +79,15 @@ function Navbar() {
                     marginTop: "10px",
                     marginLeft: "10px",
                   }}
-                >
+                > */}
+                <Link className="nav-link" to={"#"}>
                   <Switch
                     checked={isDark}
                     onChange={toggle}
                     styling="docusaurus"
                   />
-                </div>
+                </Link>
+                {/* </div> */}
               </li>
 
               {/* <li className="nav-item dropdown">

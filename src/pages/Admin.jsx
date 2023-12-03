@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Fire from "../Fire";
 import "../css/admin.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -10,6 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import cheerio from "cheerio";
 import { Link } from "react-router-dom";
+import ResizeObserver from "resize-observer-polyfill";
 
 const fire = new Fire();
 const YourReactComponent = () => {
@@ -74,6 +75,14 @@ const YourReactComponent = () => {
   useEffect(() => {
     if (user && user.uid == process.env.REACT_APP_ID) setLogged(true);
   }, [, user]);
+  const editorRef = useRef();
+
+  const mori = (e) => {};
+
+  useEffect(() => {
+    window.addEventListener("scroll", (e) => mori(e));
+  }, []);
+
   const filterCategory = (cat) => {
     console.log(cat);
     if (cat === "toate postarile") {
@@ -89,6 +98,7 @@ const YourReactComponent = () => {
     });
     setData(hh);
   };
+
   const [name, setName] = useState("");
   const [textEditor, setTextEditor] = useState([]);
   const [images, setImages] = useState([]);
@@ -173,12 +183,17 @@ const YourReactComponent = () => {
       };
       console.log(data);
       const newDataId = await dbHandler.createData("/blog", data);
-      console.log("e ok");
-      toast("Post uploaded!");
-      setNewDataKey(newDataId);
-      setTextEditor([]);
+      console.log(newDataId);
+      if (newDataId) {
+        toast("Post uploaded!");
+        setNewDataKey(newDataId);
+        setTextEditor([]);
+      } else {
+        toast("Error!");
+      }
       setLoading(false);
     } catch (error) {
+      toast("Error!");
       setLoading(false);
       console.error("Error:", error);
     }
@@ -223,56 +238,58 @@ const YourReactComponent = () => {
             <br />
 
             <h2>Textul blogului: </h2>
-            <CKEditor
-              editor={ClassicEditor}
-              config={{
-                toolbar: [
-                  "heading",
-                  "|",
-                  "bold",
-                  "italic",
-                  "link",
-                  "bulletedList",
-                  "numberedList",
-                  "blockQuote",
-                  "|",
-                  "insertTable",
-                  "tableColumn",
-                  "tableRow",
-                  "mergeTableCells",
-                  "|",
-                  "undo",
-                  "redo",
-                ],
-              }}
-              onInit={(editor) => {
-                console.log("Editor is ready to use!", editor);
-                console.log(
-                  "toolbar: ",
-                  Array.from(editor.ui.componentFactory.names())
-                );
-                console.log(
-                  "plugins: ",
-                  ClassicEditor.builtinPlugins.map(
-                    (plugin) => plugin.pluginName
-                  )
-                );
-              }}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                console.log(data);
-                setTextEditor(data);
-              }}
-              onBlur={(editor) => {
-                console.log("Blur.", editor);
-              }}
-              onFocus={(editor) => {
-                console.log("Focus.", editor);
-              }}
-              onReady={(e) => {
-                console.log("GATAAA: ", e);
-              }}
-            />
+            <div>
+              <CKEditor
+                ref={editorRef}
+                editor={ClassicEditor}
+                config={{
+                  toolbar: [
+                    "heading",
+                    "|",
+                    "bold",
+                    "italic",
+                    "link",
+                    "bulletedList",
+                    "numberedList",
+                    "blockQuote",
+                    "|",
+                    "insertTable",
+                    "tableColumn",
+                    "tableRow",
+                    "mergeTableCells",
+                    "|",
+                    "undo",
+                    "redo",
+                  ],
+                }}
+                onInit={(editor) => {
+                  console.log(
+                    "toolbar: ",
+                    Array.from(editor.ui.componentFactory.names())
+                  );
+                  console.log(
+                    "plugins: ",
+                    ClassicEditor.builtinPlugins.map(
+                      (plugin) => plugin.pluginName
+                    )
+                  );
+                }}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setTextEditor(data);
+                }}
+                onBlur={(info, editor) => {
+                  console.log("Blur.", editor);
+                }}
+                onFocus={(editor) => {
+                  console.log("Focus.", editor);
+                }}
+                onReady={(e) => {
+                  console.log("GATAAA: ", e);
+                }}
+              />
+            </div>
+
             <br />
             <div className="selectCategory">
               <h2>Categorie pentru postare: </h2>
@@ -367,7 +384,6 @@ const YourReactComponent = () => {
                           Object.entries(data)
                             .reverse()
                             .map((da) => {
-                              console.log(da[1].text);
                               if (da[1].text) {
                                 const $ = cheerio.load(da[1].text);
                                 const h2 = $("h2").first().text();
