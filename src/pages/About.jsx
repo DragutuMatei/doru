@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useWindowSize from "../components/WindowSize";
 
 function About() {
+  const { width, height } = useWindowSize();
+  const [isMobile, setMobile] = useState(false);
+  useEffect(() => {
+    if (width < 720) {
+      setMobile(true);
+    } else {
+      setMobile(false);
+    }
+  }, [, width, height]);
   return (
     <>
       <div
@@ -109,7 +119,7 @@ function About() {
               <h2 className="mb-3 text-capitalize">About Us</h2>
               <ul
                 className="list-inline breadcrumbs text-capitalize"
-                style={{fontWeight:"500"}}
+                style={{ fontWeight: "500" }}
               >
                 <li className="list-inline-item">
                   <Link to="/">Home</Link>
@@ -121,7 +131,7 @@ function About() {
             </div>
           </div>
         </div>
-        <div className="has-shapes">
+        <div className="has-shapes" style={{ opacity: isMobile ? 0.2 : 1 }}>
           <svg
             className="shape shape-left text-light"
             viewBox="0 0 192 752"
