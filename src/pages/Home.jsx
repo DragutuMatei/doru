@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useWindowSize from "../components/WindowSize";
+import { Link } from "react-router-dom";
 
 function Home() {
   // const click = (index) => {
@@ -47,10 +48,10 @@ function Home() {
                   of Colombia. It remains to choose what suits you as fast as
                   you.
                 </p>{" "}
-                <a
+                <Link
                   type="button"
                   className="btn btn-primary"
-                  href="#"
+                  to="#"
                   data-bs-toggle="modal"
                   data-bs-target="#applyLoan"
                 >
@@ -59,7 +60,7 @@ function Home() {
                     style={{ fontSize: "14px" }}
                     className="ms-2 fas fa-arrow-right"
                   ></span>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-lg-6">
@@ -176,7 +177,7 @@ function Home() {
               </div>
             </div>
             <div className="col-lg-4 col-md-6 service-item">
-              <a className="text-black" href="service-details.html">
+              <Link className="text-black" to="/how">
                 <div className="block">
                   {" "}
                   <span className="colored-box text-center h3 mb-4">01</span>
@@ -186,10 +187,10 @@ function Home() {
                     diam nonumy eirmod
                   </p>
                 </div>
-              </a>
+              </Link>
             </div>
             <div className="col-lg-4 col-md-6 service-item">
-              <a className="text-black" href="service-details.html">
+              <Link className="text-black" to="/how">
                 <div className="block">
                   {" "}
                   <span className="colored-box text-center h3 mb-4">02</span>
@@ -199,10 +200,10 @@ function Home() {
                     diam nonumy eirmod
                   </p>
                 </div>
-              </a>
+              </Link>
             </div>
             <div className="col-lg-4 col-md-6 service-item">
-              <a className="text-black" href="service-details.html">
+              <Link className="text-black" to="/how">
                 <div className="block">
                   {" "}
                   <span className="colored-box text-center h3 mb-4">03</span>
@@ -212,10 +213,10 @@ function Home() {
                     diam nonumy eirmod
                   </p>
                 </div>
-              </a>
+              </Link>
             </div>
             <div className="col-lg-4 col-md-6 service-item">
-              <a className="text-black" href="service-details.html">
+              <Link className="text-black" to="/how">
                 <div className="block">
                   {" "}
                   <span className="colored-box text-center h3 mb-4">04</span>
@@ -225,10 +226,10 @@ function Home() {
                     diam nonumy eirmod
                   </p>
                 </div>
-              </a>
+              </Link>
             </div>
             <div className="col-lg-4 col-md-6 service-item">
-              <a className="text-black" href="service-details.html">
+              <Link className="text-black" to="/how">
                 <div className="block">
                   {" "}
                   <span className="colored-box text-center h3 mb-4">05</span>
@@ -238,7 +239,7 @@ function Home() {
                     diam nonumy eirmod
                   </p>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -267,9 +268,9 @@ function Home() {
                     viverra faucisfbus
                   </p>
                 </p>{" "}
-                <a className="btn btn-primary mt-4" href="about.html">
+                <Link className="btn btn-primary mt-4" to="about.html">
                   Know About Us
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-lg-7 text-center text-lg-end">
@@ -454,45 +455,45 @@ function Home() {
               >
                 <li className="nav-item m-2" role="presentation">
                   {" "}
-                  <a
+                  <Link
                     className="nav-link btn btn-outline-primary effect-none text-dark active"
                     id="pills-how-much-can-i-recive-tab"
                     data-bs-toggle="pill"
-                    href="#pills-how-much-can-i-recive"
+                    to="#pills-how-much-can-i-recive"
                     role="tab"
                     aria-controls="pills-how-much-can-i-recive"
                     aria-selected="true"
                   >
                     How Much Can I Recive?
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item m-2" role="presentation">
                   {" "}
-                  <a
+                  <Link
                     className="nav-link btn btn-outline-primary effect-none text-dark "
                     id="pills-how-much-does-it-costs-tab"
                     data-bs-toggle="pill"
-                    href="#pills-how-much-does-it-costs"
+                    to="#pills-how-much-does-it-costs"
                     role="tab"
                     aria-controls="pills-how-much-does-it-costs"
                     aria-selected="true"
                   >
                     How Much Does It Costs?
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item m-2" role="presentation">
                   {" "}
-                  <a
+                  <Link
                     className="nav-link btn btn-outline-primary effect-none text-dark "
                     id="pills-how-do-i-repay-tab"
                     data-bs-toggle="pill"
-                    href="#pills-how-do-i-repay"
+                    to="#pills-how-do-i-repay"
                     role="tab"
                     aria-controls="pills-how-do-i-repay"
                     aria-selected="true"
                   >
                     How Do I Repay?
-                  </a>
+                  </Link>
                 </li>
               </ul>
               <div
@@ -720,7 +721,7 @@ function Home() {
                 </div>
                 <div className="content">
                   Lorem ipsum dolor{" "}
-                  <a href="http://google.com">@reamansimond</a> demina egestas
+                  <Link to="http://google.com">@reamansimond</Link> demina egestas
                   sit purus felis arcu. Vitae, turpisds tortr etiam faucibus ac
                   suspendisse.
                 </div>
@@ -745,7 +746,7 @@ function Home() {
                 </div>
                 <div className="content">
                   Lorem ipsum dolor{" "}
-                  <a href="http://google.com">@reamansimond</a> demina egestas
+                  <Link to="http://google.com">@reamansimond</Link> demina egestas
                   sit purus felis arcu. Vitae, turpisds tortr etiam faucibus ac
                   suspendisse.
                 </div>
@@ -770,7 +771,7 @@ function Home() {
                 </div>
                 <div className="content">
                   Lorem ipsum dolor{" "}
-                  <a href="http://google.com">@reamansimond</a> demina egestas
+                  <Link to="http://google.com">@reamansimond</Link> demina egestas
                   sit purus felis arcu. Vitae, turpisds tortr etiam faucibus ac
                   suspendisse.
                 </div>
@@ -795,7 +796,7 @@ function Home() {
                 </div>
                 <div className="content">
                   Lorem ipsum dolor{" "}
-                  <a href="http://google.com">@reamansimond</a> demina egestas
+                  <Link to="http://google.com">@reamansimond</Link> demina egestas
                   sit purus felis arcu. Vitae, turpisds tortr etiam faucibus ac
                   suspendisse.
                 </div>
@@ -820,7 +821,7 @@ function Home() {
                 </div>
                 <div className="content">
                   Lorem ipsum dolor{" "}
-                  <a href="http://google.com">@reamansimond</a> demina egestas
+                  <Link to="http://google.com">@reamansimond</Link> demina egestas
                   sit purus felis arcu. Vitae, turpisds tortr etiam faucibus ac
                   suspendisse.
                 </div>
@@ -845,7 +846,7 @@ function Home() {
                 </div>
                 <div className="content">
                   Lorem ipsum dolor{" "}
-                  <a href="http://google.com">@reamansimond</a> demina egestas
+                  <Link to="http://google.com">@reamansimond</Link> demina egestas
                   sit purus felis arcu. Vitae, turpisds tortr etiam faucibus ac
                   suspendisse.
                 </div>
@@ -1100,7 +1101,7 @@ function Home() {
                   <h4 className="h5">Still Have Questions?</h4>
                   <div className="content">
                     Call Us We Will Be Happy To Help
-                    <br /> <a href="tel:+3301563965">+3301563965</a>
+                    <br /> <Link to="tel:+3301563965">+3301563965</Link>
                     <br />
                     Monday - Friday
                     <br />
