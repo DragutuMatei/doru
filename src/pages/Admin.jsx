@@ -217,7 +217,8 @@ const YourReactComponent = () => {
     const newUser = await fire.loginWithGoogle();
     if (
       newUser.uid == process.env.REACT_APP_ID ||
-      newUser.uid == process.env.REACT_APP_ID2
+      newUser.uid == process.env.REACT_APP_ID2 ||
+      newUser.uid == process.env.REACT_APP_ID3
     )
       setLogged(true);
     console.log(newUser);
