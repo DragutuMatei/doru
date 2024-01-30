@@ -5,6 +5,7 @@ import { Switch, useDarkreader } from "react-darkreader";
 
 function Navbar() {
   const [isDark, { toggle }] = useDarkreader(true);
+
   return (
     <header className="navigation bg-tertiary">
       <nav className="navbar navbar-expand-xl navbar-light text-center py-3">
@@ -14,8 +15,8 @@ function Navbar() {
               loading="prelaod"
               decoding="async"
               className="img-fluid"
-              width="130"
-              src={require("../images/logo.png")}
+              width="150"
+              src={isDark ? require("../images/logo_dark.svg").default : require("../images/logo.svg").default}
               alt="Bunker Production"
               style={{
                 alignContent: "center",

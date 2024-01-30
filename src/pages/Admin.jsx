@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { MdDeleteForever } from "react-icons/md";
 import Fire from "../Fire";
 import "../css/admin.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -23,6 +24,10 @@ const YourReactComponent = () => {
     const fire = new Fire();
 
     await fire.deleteData(`/contact/${id}`);
+  };
+  const delete_cat = async (id) => {
+    const fire = new Fire();
+    await fire.deleteData(`/categories/${id}`);
   };
   const deletePost = async (id) => {
     const fire = new Fire();
@@ -73,7 +78,14 @@ const YourReactComponent = () => {
   }, []);
 
   useEffect(() => {
-    if (user && user.uid == process.env.REACT_APP_ID) setLogged(true);
+    if (
+      user &&
+      (user.uid == process.env.REACT_APP_ID ||
+        user.uid == process.env.REACT_APP_ID2 ||
+        user.uid == process.env.REACT_APP_ID3 ||
+        user.uid == process.env.REACT_APP_ID4)
+    )
+      setLogged(true);
   }, [, user]);
   const editorRef = useRef();
 
@@ -218,7 +230,8 @@ const YourReactComponent = () => {
     if (
       newUser.uid == process.env.REACT_APP_ID ||
       newUser.uid == process.env.REACT_APP_ID2 ||
-      newUser.uid == process.env.REACT_APP_ID3
+      newUser.uid == process.env.REACT_APP_ID3 ||
+      newUser.uid == process.env.REACT_APP_ID4
     )
       setLogged(true);
     console.log(newUser);
@@ -289,7 +302,6 @@ const YourReactComponent = () => {
                   console.log("GATAAA: ", e);
                 }}
               />
-              
             </div>
 
             <br />
@@ -450,10 +462,31 @@ const YourReactComponent = () => {
                           Object.entries(categories) &&
                           Object.entries(categories).map((cat) => {
                             return (
-                              <li
-                                onClick={() => filterCategory(cat[1].category)}
-                              >
-                                <Link to={"#"}>{cat[1].category}</Link>
+                              <li>
+                                <Link
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                  }}
+                                  to={"#"}
+                                >
+                                  <span
+                                    onClick={() =>
+                                      filterCategory(cat[1].category)
+                                    }
+                                  >
+                                    {cat[1].category}
+                                  </span>
+                                  <MdDeleteForever
+                                    style={{
+                                      color: "#c70000",
+                                      padding: "5px",
+                                      fontSize: 40,
+                                    }}
+                                    onClick={() => delete_cat(cat[0])}
+                                  />
+                                </Link>
                               </li>
                             );
                           })}
